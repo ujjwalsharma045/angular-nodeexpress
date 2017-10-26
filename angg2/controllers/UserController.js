@@ -150,7 +150,7 @@ module.exports = function(app , func , mail, upload, storage, mailer, multer, va
 		
 		if(req.method=="POST"){
 			
-			var upload = multer({storage:storage , fileFilter:function(req, file, callback){ 
+			var upload = multer({storage:storage , limits:{ fileSize: 2  },  fileFilter:function(req, file, callback){ 
 			   console.log("first"); 
 			   if(file){ 
 				  var ext = path.extname(file.originalname); 
@@ -160,103 +160,109 @@ module.exports = function(app , func , mail, upload, storage, mailer, multer, va
 					  //return callback(res.send(JSON.stringify({authen:1 ,error:1 , message:'Please upload a valid file.'})) , false);   
 				  }
 				  else { 
-				    callback(null,true);
+				      callback(null,true);
 				  }
 			   }   
             }});
 								
 			upload.single("files")(req , res , function(err){
-				   console.log(err);
-				   var condition = {
-					   email:req.body.email					
-				   };
-				   console.log(userid);
-				   var currentdate = new Date();
-				   var formatteddate = dateFormat(currentdate ,'yyyy-mm-dd HH:MM:ss');									  												
-				   console.log(req.file);						
-				   if(req.file){
-					   User.find({_id:userid}, function(err, records) {
-							  if (err) throw err;
-							  console.log(records);
-							  if(records[0].profile_pic!=""){
-								  if(fs.existsSync("uploads/"+records[0].profile_pic)){
-									  fs.unlink("uploads/"+records[0].profile_pic , function(){
-										  
-									  });
-								  }								  
+				   if(err.code && err.code=="LIMIT_FILE_SIZE"){
+					   res.setHeader('Content-Type', 'application/json');
+					   res.send(JSON.stringify({authen:1 ,error:1 , message:'File is too large'})); 
+				   }
+				   else {	  
+					   var condition = {
+						   email:req.body.email					
+					   };
+					   console.log(userid);
+					   var currentdate = new Date();
+					   var formatteddate = dateFormat(currentdate ,'yyyy-mm-dd HH:MM:ss');									  												
+					   console.log(req.file);						
+					   if(req.file){
+						   User.find({_id:userid}, function(err, records) {
+								  if (err) throw err;
+								  console.log(records);
+								  if(records[0].profile_pic!=""){
+									  if(fs.existsSync("uploads/"+records[0].profile_pic)){
+										  fs.unlink("uploads/"+records[0].profile_pic , function(){
+											  
+										  });
+									  }								  
+								  }
+						   });
+						   
+						   data = {
+								first_name: req.body.first_name,
+								last_name:req.body.last_name,
+								address:req.body.address,
+								city:req.body.city,
+								state:req.body.state,
+								profile_pic:req.file.filename,
+								zipcode:req.body.zipcode,
+								//dateofbirth:req.body.dateofbirth,	
+								modified_at:formatteddate
+						   };
+					   }
+					   else {
+						   data = {
+								first_name: req.body.first_name,
+								last_name:req.body.last_name,
+								address:req.body.address,
+								city:req.body.city,
+								state:req.body.state,
+								//profile_pic:req.file.filename,
+								zipcode:req.body.zipcode,
+								//dateofbirth:req.body.dateofbirth,	
+								modified_at:formatteddate
+						   };
+					   }
+												 
+					   User.find(condition).exec(function(err , records){
+							 if(records.length>1){
+								 res.setHeader('Content-Type', 'application/json');
+								 res.send(JSON.stringify({authen:1 ,error:1 , message:'User email already exists'})); 
+							 }
+							 else if(records.length>0 && records[0]['_id']!=userid){
+								 res.setHeader('Content-Type', 'application/json');
+								 res.send(JSON.stringify({authen:1 ,error:1 , message:'User email already exists'})); 
+							 }
+							 else {
+								  var anothercondition = {
+									 username:req.body.username	 
+								  };
+								 
+								  User.find(anothercondition).exec(function(err , records){
+										 if(records.length>1){
+											res.setHeader('Content-Type', 'application/json');
+											res.send(JSON.stringify({authen:1 ,error:1 , message:'User name already exists'})); 
+										 }
+										 else if(records.length>0 && records[0]['_id']!=userid){
+											res.setHeader('Content-Type', 'application/json');
+											res.send(JSON.stringify({authen:1 ,error:1 , message:'User name already exists'})); 
+										 }
+										 else {
+											if(error.length <=0){		 
+												//console.log(req.files);
+												console.log("xf");									                          
+												
+												console.log(data);
+												User.findOneAndUpdate({_id: userid}, data, function(err, records) {
+												  if (err) throw err;				 
+															 
+												  res.setHeader('Content-Type', 'application/json');
+												  res.send(JSON.stringify({authen:1 ,success:1 , message:'User updated successfully'}));
+												});
+											}
+											else {
+											   res.setHeader('Content-Type', 'application/json');
+											   res.send(JSON.stringify({authen:1 ,success:0}));
+											}								 								 								 
+										 }
+								  });
 							  }
-					   });
-					   
-					   data = {
-							first_name: req.body.first_name,
-							last_name:req.body.last_name,
-							address:req.body.address,
-							city:req.body.city,
-							state:req.body.state,
-							profile_pic:req.file.filename,
-							zipcode:req.body.zipcode,
-							//dateofbirth:req.body.dateofbirth,	
-							modified_at:formatteddate
-					   };
+				       }); 					   
+				
 				   }
-				   else {
-					   data = {
-							first_name: req.body.first_name,
-							last_name:req.body.last_name,
-							address:req.body.address,
-							city:req.body.city,
-							state:req.body.state,
-							//profile_pic:req.file.filename,
-							zipcode:req.body.zipcode,
-							//dateofbirth:req.body.dateofbirth,	
-							modified_at:formatteddate
-					   };
-				   }
-											 
-				   User.find(condition).exec(function(err , records){
-						 if(records.length>1){
-							 res.setHeader('Content-Type', 'application/json');
-							 res.send(JSON.stringify({authen:1 ,error:1 , message:'User email already exists'})); 
-						 }
-						 else if(records.length>0 && records[0]['_id']!=userid){
-							 res.setHeader('Content-Type', 'application/json');
-							 res.send(JSON.stringify({authen:1 ,error:1 , message:'User email already exists'})); 
-						 }
-						 else {
-							  var anothercondition = {
-								 username:req.body.username	 
-							  };
-							 
-							  User.find(anothercondition).exec(function(err , records){
-									 if(records.length>1){
-										res.setHeader('Content-Type', 'application/json');
-										res.send(JSON.stringify({authen:1 ,error:1 , message:'User name already exists'})); 
-									 }
-									 else if(records.length>0 && records[0]['_id']!=userid){
-										res.setHeader('Content-Type', 'application/json');
-										res.send(JSON.stringify({authen:1 ,error:1 , message:'User name already exists'})); 
-									 }
-									 else {
-										if(error.length <=0){		 
-											//console.log(req.files);
-											console.log("xf");									                          
-											
-											console.log(data);
-											User.findOneAndUpdate({_id: userid}, data, function(err, records) {
-											  if (err) throw err;				 
-														 
-											  res.setHeader('Content-Type', 'application/json');
-											  res.send(JSON.stringify({authen:1 ,success:1 , message:'User updated successfully'}));
-											});
-										}
-										else {
-										   res.setHeader('Content-Type', 'application/json');
-										   res.send(JSON.stringify({authen:1 ,success:0}));
-										}								 								 								 
-									 }
-							   });
-						  }
-				   }); 					   
 			});																		
 		}		
 	});
@@ -272,7 +278,7 @@ module.exports = function(app , func , mail, upload, storage, mailer, multer, va
 			var data = {};
 			if(req.method=="POST"){
  
-                var upload = multer({storage:storage , fileFilter:function(req, file, callback){ 
+                var upload = multer({storage:storage , limits:{ fileSize: 1024  } , fileFilter:function(req, file, callback){ 
 				     console.log("first"); 
 				     if(file){ 
 						  var ext = path.extname(file.originalname); 
@@ -287,108 +293,114 @@ module.exports = function(app , func , mail, upload, storage, mailer, multer, va
                 }});
 				
 				upload.single('files')(req , res , function(err){
-					var currentdate = new Date();
-					var formatteddate = dateFormat(currentdate ,'yyyy-mm-dd HH:MM:ss');
-                    var condition = {
-				   	   username:req.body.username
-				    };	
-					
-					 console.log(req.file); 
-					
-					if(req.file){					
-						data = {
-							 first_name:req.body.first_name,
-							 last_name:req.body.last_name,
-							 email:req.body.email,
-							 username:req.body.username,
-							 password:bCrypt.hashSync(req.body.password),
-							 address:req.file.address,
-							 city:req.body.city,
-							 state:req.body.state,
-							 zipcode:req.body.zipcode,
-							 profile_pic:req.file.filename,
-							 dateofbirth:req.body.dateofbirth,
-							 created_at :formatteddate 						
-						};
+					if(err && err.code==""){
+						res.setHeader('Content-Type', 'application/json');
+						res.send(JSON.stringify({authen:1 , error:1 , message:'File is too large.'})); 				   
 					}
-					else {						
-						data = {
-							 first_name:req.body.first_name,
-							 last_name:req.body.last_name,
-							 email:req.body.email,
-							 username:req.body.username,
-							 password:bCrypt.hashSync(req.body.password),
-							 address:req.body.address,
-							 city:req.body.city,
-							 state:req.body.state,
-							 zipcode:req.body.zipcode,
-							 //profile_pic:req.files[0].filename,
-							 //dateofbirth:req.body.dateofbirth,
-							 created_at :formatteddate 						
-						};
-					}
-					
-					User.find(condition).exec(function(err , records){
-						if(records.length>0){
-							res.setHeader('Content-Type', 'application/json');
-							res.send(JSON.stringify({authen:1 , success:1 , message:'User name already exists.'})); 				   
+					else {
+						var currentdate = new Date();
+						var formatteddate = dateFormat(currentdate ,'yyyy-mm-dd HH:MM:ss');
+						var condition = {
+						   username:req.body.username
+						};	
+						
+						console.log(req.file); 
+						
+						if(req.file){					
+							data = {
+								 first_name:req.body.first_name,
+								 last_name:req.body.last_name,
+								 email:req.body.email,
+								 username:req.body.username,
+								 password:bCrypt.hashSync(req.body.password),
+								 address:req.file.address,
+								 city:req.body.city,
+								 state:req.body.state,
+								 zipcode:req.body.zipcode,
+								 profile_pic:req.file.filename,
+								 dateofbirth:req.body.dateofbirth,
+								 created_at :formatteddate 						
+							};
 						}
-						else {
-							 var anothercondition = {
-								 email:req.body.email	 
-							 };
-							 
-							 User.find(anothercondition).exec(function(err , records){
-								  if(records.length>0){
-									  res.setHeader('Content-Type', 'application/json');
-									  res.send(JSON.stringify({authen:1 , success:1 , message:'User email already exists.'})); 				   
-								  }
-								  else {								  
-									  if(error.length<=0){                   																							
-											console.log(data);			   
-											var detail = new User(data);
-											detail.save(function(err){
-												if(err) throw err;
-													 console.log('User saved successfully!');
-													  
-													  var profile_data = {
-														  description:'ss',
-														  user_id:detail._id
-													  };
-													  
-													  var profile_detail = new UserProfile(profile_data);
-													  
-													   profile_detail.save(function(err){
-														  if(err) console.log(err);
-														  detail.userprofiles.push(profile_detail);
-														  detail.save(function(err){});
-													   });
-												   
-													   mailoptions = {
-														  to:data.email,
-														  subject: "User Registration",
-														  text:"User Registered successfully"
-													   };
-												   
-													   var mailObj = mail.configMail(mailer);
-													  
-													   mailObj.sendMail(mailoptions, function(error , response){
-														  if(error){
-															  console.log(error);
-														  }
-														  else {
-															  console.log(response.message); 
-														  }
-													   });
-													  
-													   res.setHeader('Content-Type', 'application/json');
-													   res.send(JSON.stringify({authen:1 , success:1 , message:'User added successfully'})); 				   
-											  });			   			    
-										}								  								 
-								  }
-							 });
-						 }
-				    });
+						else {						
+							data = {
+								 first_name:req.body.first_name,
+								 last_name:req.body.last_name,
+								 email:req.body.email,
+								 username:req.body.username,
+								 password:bCrypt.hashSync(req.body.password),
+								 address:req.body.address,
+								 city:req.body.city,
+								 state:req.body.state,
+								 zipcode:req.body.zipcode,
+								 //profile_pic:req.files[0].filename,
+								 //dateofbirth:req.body.dateofbirth,
+								 created_at :formatteddate 						
+							};
+						}
+						
+						User.find(condition).exec(function(err , records){
+							if(records.length>0){
+								res.setHeader('Content-Type', 'application/json');
+								res.send(JSON.stringify({authen:1 , success:1 , message:'User name already exists.'})); 				   
+							}
+							else {
+								 var anothercondition = {
+									 email:req.body.email	 
+								 };
+								 
+								 User.find(anothercondition).exec(function(err , records){
+									  if(records.length>0){
+										  res.setHeader('Content-Type', 'application/json');
+										  res.send(JSON.stringify({authen:1 , success:1 , message:'User email already exists.'})); 				   
+									  }
+									  else {								  
+										  if(error.length<=0){                   																							
+												console.log(data);			   
+												var detail = new User(data);
+												detail.save(function(err){
+													if(err) throw err;
+														 console.log('User saved successfully!');
+														  
+														  var profile_data = {
+															  description:'ss',
+															  user_id:detail._id
+														  };
+														  
+														  var profile_detail = new UserProfile(profile_data);
+														  
+														   profile_detail.save(function(err){
+															  if(err) console.log(err);
+															  detail.userprofiles.push(profile_detail);
+															  detail.save(function(err){});
+														   });
+													   
+														   mailoptions = {
+															  to:data.email,
+															  subject: "User Registration",
+															  text:"User Registered successfully"
+														   };
+													   
+														   var mailObj = mail.configMail(mailer);
+														  
+														   mailObj.sendMail(mailoptions, function(error , response){
+															  if(error){
+																  console.log(error);
+															  }
+															  else {
+																  console.log(response.message); 
+															  }
+														   });
+														  
+														   res.setHeader('Content-Type', 'application/json');
+														   res.send(JSON.stringify({authen:1 , success:1 , message:'User added successfully'})); 				   
+												  });			   			    
+											}								  								 
+									  }
+								 });
+							 }
+						});
+				    }
 			    });				 				 																  
 			}
 			else {

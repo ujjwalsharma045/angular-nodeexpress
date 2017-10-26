@@ -22,7 +22,7 @@
 							<div class="col-md-6">
 								<div class="form-group">
 									<label>First Name</label>
-									<input type="text" [formControl]="userForm.controls['first_name']" class="form-control border-input" placeholder="First Name">
+									<input type="text"  [formControl]="userForm.controls['first_name']" class="form-control border-input" placeholder="First Name">
 									<div *ngIf="userForm.controls['first_name'].hasError('required') && submitted" class="alert alert-danger">Enter first name.</div>          
 								</div>
 							</div>

@@ -24,12 +24,12 @@ module.exports = function(app , func , mail, upload, storage, mailer, multer, va
 					  throw err;
 				  
 			       res.setHeader('Content-Type', 'application/json');
-				   res.send(JSON.stringify({authen:1 , success:1})); 				   
+				   res.send(JSON.stringify({authen:1 , success:1 , message:'Product added successfully'})); 				   
 			   });
 		   }
            else {
 	           res.setHeader('Content-Type', 'application/json');
-			   res.send(JSON.stringify({authen:1 , success:0})); 				   
+			   res.send(JSON.stringify({authen:1 , success:0 , message:'Product could not be added successfully'})); 				   
            }		   
 	});
 
@@ -56,12 +56,12 @@ module.exports = function(app , func , mail, upload, storage, mailer, multer, va
 						  throw err;
 					  
 					   res.setHeader('Content-Type', 'application/json');
-					   res.send(JSON.stringify({authen:1 , success:1 , product_id:''})); 				   
+					   res.send(JSON.stringify({authen:1 , success:1 , product_id:'' , message:'Product updated successfully'})); 				   
 				   });
 		   }
            else {
                    res.setHeader('Content-Type', 'application/json');
-			       res.send(JSON.stringify({authen:1 , success:0})); 				   
+			       res.send(JSON.stringify({authen:1 , success:0, message:'Product could not be updated successfully'})); 				   
            }		   
 	});	
 

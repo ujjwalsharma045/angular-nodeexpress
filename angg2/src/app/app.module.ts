@@ -43,6 +43,7 @@ import { CategoryeditComponent } from './categoryedit/categoryedit.component';
 import { CategoryviewComponent } from './categoryview/categoryview.component';
 //import {PopupModule} from 'ng2-opd-popup';
 //import {DatePickerModule} from 'ng2-datepicker-bootstrap';
+//import {ModalModule} from "ng2-modal";
 
 @NgModule({
   declarations: [
@@ -91,7 +92,8 @@ import { CategoryviewComponent } from './categoryview/categoryview.component';
 	ReactiveFormsModule,
 	FormsModule,
 	CKEditorModule,
-    //DatePickerModule,
+	//ModalModule,
+    //DatePickerModule,	
     NguiMapModule.forRoot({apiUrl: 'https://maps.google.com/maps/api/js?key=AIzaSyBr-tgUtpm8cyjYVQDrjs8YpZH7zBNWPuY'})
 
   ],
