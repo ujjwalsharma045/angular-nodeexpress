@@ -1,4 +1,4 @@
-module.exports = function(app , func , mail, upload, storage, mailer, multer, validator, User, paginate , cors , dateFormat , dateDiff, dobByAge, json2csv, excel , pdf, passport , LocalStrategy, bCrypt , fs, async, PasswordGenerate, randtoken, handlebars, UserProfile){ 
+module.exports = function(app , func , mail, upload, storage, mailer, multer, validator, User, paginate , cors , dateFormat , dateDiff, dobByAge, json2csv, excel , pdf, passport , LocalStrategy, bCrypt , fs, async, PasswordGenerate, randtoken, handlebars, UserProfile , path){ 
     
     var sess;
     //var session = require('express-session');  
@@ -6,6 +6,7 @@ module.exports = function(app , func , mail, upload, storage, mailer, multer, va
   	var filereader = require('xlsx-to-json-lc');
     var async = require('async');	
 	
+
 
     var readHTMLFile = function(path, callback) {
 		fs.readFile(path, {encoding: 'utf-8'}, function (err, html) {
@@ -148,8 +149,24 @@ module.exports = function(app , func , mail, upload, storage, mailer, multer, va
 		var recor = [];				
 		
 		if(req.method=="POST"){
+			
+			var upload = multer({storage:storage , fileFilter:function(req, file, callback){ 
+			   console.log("first"); 
+			   if(file){ 
+				  var ext = path.extname(file.originalname); 
+				  if(ext!=='.png' && ext!=='.jpg' && ext!=='.gif' && ext!=='.jpeg'){
+					  res.setHeader('Content-Type', 'application/json'); 
+					  res.send(JSON.stringify({authen:1 ,error:1 , message:'Please upload a valid file.'}));
+					  //return callback(res.send(JSON.stringify({authen:1 ,error:1 , message:'Please upload a valid file.'})) , false);   
+				  }
+				  else { 
+				    callback(null,true);
+				  }
+			   }   
+            }});
 								
 			upload.single("files")(req , res , function(err){
+				   console.log(err);
 				   var condition = {
 					   email:req.body.email					
 				   };
@@ -253,7 +270,22 @@ module.exports = function(app , func , mail, upload, storage, mailer, multer, va
 	          
 			var error = [];
 			var data = {};
-			if(req.method=="POST"){								
+			if(req.method=="POST"){
+ 
+                var upload = multer({storage:storage , fileFilter:function(req, file, callback){ 
+				     console.log("first"); 
+				     if(file){ 
+						  var ext = path.extname(file.originalname); 
+						  if(ext!=='.png' && ext!=='.jpg' && ext!=='.gif' && ext!=='.jpeg'){
+							  res.setHeader('Content-Type', 'application/json'); 
+							  res.send(JSON.stringify({authen:1 ,error:1 , message:'Please upload a valid file.'}));							  
+						  }
+						  else { 
+							  callback(null,true);
+						  }
+				     }   
+                }});
+				
 				upload.single('files')(req , res , function(err){
 					var currentdate = new Date();
 					var formatteddate = dateFormat(currentdate ,'yyyy-mm-dd HH:MM:ss');

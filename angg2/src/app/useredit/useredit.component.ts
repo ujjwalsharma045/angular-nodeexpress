@@ -16,10 +16,11 @@ export class UsereditComponent implements OnInit {
     private userForm: FormGroup;
     private submitted = false;
     private sectionTitle = 'Add User';
-    private fileList:any;
+    private fileList:any = [];
     userUrl = "http://localhost:8081/";
     private userid = "";
     private userimage;	
+	private flashMessage = "";
     constructor(private route: ActivatedRoute, private router: Router, private http: HttpClient, private formBuilder: FormBuilder) {
         this.userForm = formBuilder.group({      
 			'first_name':[null, Validators.required],
@@ -61,6 +62,9 @@ export class UsereditComponent implements OnInit {
 					localStorage.setItem('message' , result['message']);
 					this.router.navigate(['./users']);	  
 				}
+				else if(result['error']=="1"){
+					this.flashMessage = result['message'];
+				} 
 			});			
 	    }	   
     }
@@ -139,7 +143,8 @@ export class UsereditComponent implements OnInit {
 				   formData.append("zipcode", this.userForm.value.zipcode);
 				}
 				
-				if(this.fileList[0]!=null){
+				alert(this.fileList.length);
+				if(this.fileList.length>0){				
 				   formData.append("files", this.fileList[0], this.fileList[0].name);
 				}
 				

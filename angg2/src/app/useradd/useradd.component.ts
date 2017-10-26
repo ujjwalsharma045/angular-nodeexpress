@@ -19,7 +19,8 @@ export class UseraddComponent implements OnInit {
 	Observable:any;
     private submitted = false;
     private sectionTitle = 'Add User';
-	private fileList:any;
+	private fileList:any = [];
+	private flashMessage;
 	userUrl = "http://localhost:8081/";
     constructor(private route: ActivatedRoute, private router: Router, private http: HttpClient, private formBuilder: FormBuilder) { 
         this.userForm = formBuilder.group({      
@@ -62,6 +63,9 @@ export class UseraddComponent implements OnInit {
 					if(result.success=="1"){
 						this.router.navigate(['./users']);	  
 					}
+					else if(result['error']=="1"){
+					    this.flashMessage = result['message'];
+				    }
 			   }); 				
 	    }		
     }
@@ -123,7 +127,8 @@ export class UseraddComponent implements OnInit {
 					   formData.append("zipcode", this.userForm.value.zipcode);
 					}
 					
-					if(this.fileList[0]!=null){
+					alert(this.fileList.length);
+					if(this.fileList.length>0){
 					   formData.append("files", this.fileList[0], this.fileList[0].name);
 					}
 					

@@ -5,6 +5,7 @@ var cookieParser = require('cookie-parser');
 var passport = require('passport');
 var session = require('express-session');
 var LocalStrategy = require('passport-local').Strategy;
+
 app.use(session({
   secret: 'fhtfrfghyh',
   resave: true,
@@ -188,7 +189,7 @@ var GoogleStrategy = require('passport-google-oauth').OAuth2Strategy;
 }*/
 
 var paginate = require('express-paginate');
-
+var path = require('path');
 var cors = require('cors');
 app.use(cors());
 app.use(express.static('public'));
@@ -342,7 +343,19 @@ var storage = multer.diskStorage({
 	}
 });
 
-var upload = multer({storage:storage});
+var upload = multer({storage:storage , fileFilter:function(req, file, callback){ 
+   console.log("first"); 
+   if(file){ 
+      var ext = path.extname(file.originalname); 
+	  if(ext!=='.png' && ext!=='.jpg' && ext!=='.gif' && ext!=='.jpeg'){
+		 callback(
+		   res.send(JSON.stringify({authen:1 ,error:1 , message:'Please upload a valid file.'})),
+		   null
+		 );   
+	  }
+   }   
+}});
+
 var func = require("./helpers/CommonHelper.js");
 var mail = require("./helpers/MailHelper.js");
 var dateFormat = require('dateformat'); 
@@ -357,7 +370,7 @@ var fs = require('fs');
 var async = require('async');	
 
 //var passportFacebook = require('./controllers/ThirdPartyAuth')(User , passport , LocalStrategy);
-require('./controllers/UserController')(app , func , mail, upload, storage, mailer, multer, validator, User , paginate , cors , dateFormat, dateDiff , dobByAge , json2csv , excelexport , pdf , passport , LocalStrategy, bCrypt, fs, async, PasswordGenerate, randtoken, handlebars, UserProfile);
+require('./controllers/UserController')(app , func , mail, upload, storage, mailer, multer, validator, User , paginate , cors , dateFormat, dateDiff , dobByAge , json2csv , excelexport , pdf , passport , LocalStrategy, bCrypt, fs, async, PasswordGenerate, randtoken, handlebars, UserProfile , path);
 
 require('./controllers/ServiceController')(app , func , mail, upload, storage, mailer, multer, validator, Services , paginate , cors);
 

@@ -70,13 +70,19 @@
 						</div>
 						
 						<div class="row">
-							<div class="col-md-12">
+							<div class="col-md-06">
 								<div class="form-group">
 									<label>Image</label>
 									<input type="file" [formControl]="userForm.controls['image']" class="form-control border-input" placeholder="Image" (change)="fileChange($event)">
 									<div *ngIf="userForm.controls['image'].hasError('required') && submitted" class="alert alert-danger">Select File.</div>          
 								</div>
 							</div>
+							<div class="col-md-06">
+								<div class="form-group">
+									  
+
+								</div>
+							</div>	
 						</div>
 
 						<div class="row">
@@ -103,6 +109,8 @@
 							</div>
 						</div>
 
+						<div style="clear:both;padding-top:10px;" [innerHTML]="flashMessage"></div>
+						
 						<div class="text-center">
 							<button type="button" (click)="userAdd()" class="btn btn-info btn-fill btn-wd">Submit</button>
 						</div>
