@@ -27,7 +27,8 @@ export class ProductaddComponent implements OnInit {
 		 'cost_price':[null , Validators.required],
 		 'discount_flag':[null , Validators.required],
          'discount_type':[null , Validators.required],
-         'discount':[null , Validators.required],		 		 
+         'discount':[null , Validators.required],	
+		 'image':[null],
 		 'status':[null , Validators.required]
 	 });
   }

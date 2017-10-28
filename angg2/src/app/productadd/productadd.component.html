@@ -34,6 +34,16 @@
 						<div class="row">						
 							<div class="col-md-12">
 								<div class="form-group">
+									<label for="exampleInputEmail1">Product Image</label>									
+									<input type="file" [formControl]="productForm.controls['image']" class="form-control border-input" placeholder="Image">
+									<div *ngIf="productForm.controls['image'].hasError('required') && submitted" class="alert alert-danger">Select Image.</div>          
+								</div>
+							</div>
+						</div>
+						
+						<div class="row">						
+							<div class="col-md-12">
+								<div class="form-group">
 									<label for="exampleInputEmail1">Meta Tag</label>									
 									<textarea [formControl]="productForm.controls['meta_tag']" class="form-control border-input" placeholder="Meta Tag"></textarea>
 									<div *ngIf="productForm.controls['meta_tag'].hasError('required') && submitted" class="alert alert-danger">Enter Meta Tag.</div>          

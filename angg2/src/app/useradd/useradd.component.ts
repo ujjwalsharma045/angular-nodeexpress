@@ -127,7 +127,7 @@ export class UseraddComponent implements OnInit {
 					   formData.append("zipcode", this.userForm.value.zipcode);
 					}
 					
-					alert(this.fileList.length);
+					//alert(this.fileList.length);
 					if(this.fileList.length>0){
 					   formData.append("files", this.fileList[0], this.fileList[0].name);
 					}
