@@ -1031,7 +1031,7 @@ module.exports = function(app , func , mail, upload, storage, mailer, multer, va
 				 }
                  else {
 				    res.setHeader('Content-Type', 'application/json');
-				    res.send(JSON.stringify({'success':0, 'authen':0 , 'error':'Email does not exists in system'}));
+				    res.send(JSON.stringify({'error':1, 'authen':0 , 'error':'Email does not exists in system'}));
 			     }			 
 		 });       		
 	});

@@ -95,7 +95,7 @@
 								    <a [routerLink]="['../category/edit' , category._id]">
 								       <i class="fa fa-pencil-square-o" aria-hidden="true"></i>
 								    </a>
-								    <a href="javascript:void(0)" (click)="remove(category._id)">
+								    <a href="javascript:void(0)" (click)="deletecategoryConfirm(category._id)">
 									   <i class="fa fa-trash-o" aria-hidden="true"></i>
 									</a> 
 								</td>	   
@@ -127,3 +127,15 @@
     </div>
 </div>
 
+<bs-modal #myModal>
+    <bs-modal-header>
+        <h4 class="modal-title">Confirmation</h4>
+    </bs-modal-header>
+    <bs-modal-body>
+        Are you sure you want to remove clicked row ?
+    </bs-modal-body>
+    <bs-modal-footer>
+        <button type="button" class="btn btn-default" data-dismiss="modal" (click)="modal.dismiss()">No</button>
+        <button type="button" class="btn btn-primary" (click)="remove()">Yes</button>
+    </bs-modal-footer>
+</bs-modal>

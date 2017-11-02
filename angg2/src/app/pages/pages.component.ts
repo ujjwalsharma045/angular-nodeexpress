@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute, Router} from '@angular/router';
 import { FormBuilder, Validators,FormGroup,FormControl } from '@angular/forms';
 import { Observable } from 'rxjs/Observable';
@@ -7,6 +7,7 @@ import {Http, Response, Headers, RequestOptions } from '@angular/http';
 import {URLSearchParams} from '@angular/http';
 import {HttpClient} from '@angular/common/http';
 import { PagerService } from '../services/pager.service';
+import { BsModalComponent } from 'ng2-bs3-modal';
 
 @Component({
   selector: 'pages-cmp',
@@ -34,10 +35,13 @@ export class PagesComponent implements OnInit {
        sorttype:'asc',
        searchcontent:''	   
     };
-    
+    private deletedpageid;
     private sectionTitle = 'Pages';
     private pageUrl = 'http://localhost:8081/';
-
+    
+	@ViewChild('myModal')
+	modal: BsModalComponent;
+	
     constructor(private route: ActivatedRoute, private router: Router, private formBuilder: FormBuilder , private http:HttpClient , private pagerService:PagerService) { 
 	   this.searchForm = formBuilder.group({      
 			'searchcontent':[null, Validators.required]      			
@@ -86,8 +90,14 @@ export class PagesComponent implements OnInit {
 		}	  
     }
  
-    deletePage(pageid){
-		this.remove(pageid).subscribe(result => {
+    deletePageConfirm(pageid){
+		this.deletedpageid = pageid;
+		this.modal.open();
+	}
+	
+    deletePage(){
+		this.modal.close();
+		this.remove(this.deletedpageid).subscribe(result => {
 		    if(result['success']=="1"){
 			  location.reload();
 		    }		   

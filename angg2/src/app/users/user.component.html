@@ -108,7 +108,7 @@
 								<a href="javascript:void(0)" (click)="paging(pager.currentPage + 1)">Next</a>
 							</li>
 							<li [ngClass]="{disabled:pager.currentPage === pager.totalPages}">
-								<a href="javascript:void(0)" (click)="paging(pager.totalPages)">Last</a>
+								<a href="javascript:void(0)"  (click)="paging(pager.totalPages)">Last</a>
 							</li>
 						</ul>
                     </div>					
@@ -118,3 +118,15 @@
     </div>
 </div>
 
+<bs-modal #myModal>
+    <bs-modal-header>
+        <h4 class="modal-title">Confirmation</h4>
+    </bs-modal-header>
+    <bs-modal-body>
+        Are you sure you want to remove clicked row ?
+    </bs-modal-body>
+    <bs-modal-footer>
+        <button type="button" class="btn btn-default" data-dismiss="modal" (click)="modal.dismiss()">No</button>
+        <button type="button" class="btn btn-primary" (click)="deleteUser()">Yes</button>
+    </bs-modal-footer>
+</bs-modal>

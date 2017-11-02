@@ -41,13 +41,36 @@ import { CategorylistComponent } from './categorylist/categorylist.component';
 import { CategoryaddComponent } from './categoryadd/categoryadd.component';
 import { CategoryeditComponent } from './categoryedit/categoryedit.component';
 import { CategoryviewComponent } from './categoryview/categoryview.component';
+import { Md2Module }  from 'md2';
+import { BsModalModule } from 'ng2-bs3-modal';
 //import {PopupModule} from 'ng2-opd-popup';
 //import {DatePickerModule} from 'ng2-datepicker-bootstrap';
 //import {ModalModule} from "ng2-modal";
 
 @NgModule({
+  imports: [
+    BrowserModule,
+	HttpModule,
+    RouterModule.forRoot(AppRoutes),
+	RouterModule.forRoot(LoginRoutes),
+	//PopupModule.forRoot(),	
+	//PopupModule, 
+    SidebarModule,
+    NavbarModule,
+    FooterModule,
+    FixedPluginModule,
+	HttpClientModule,
+	ReactiveFormsModule,
+	FormsModule,
+	CKEditorModule,
+	//ModalModule,
+    //DatePickerModule,    
+    NguiMapModule.forRoot({apiUrl: 'https://maps.google.com/maps/api/js?key=AIzaSyBr-tgUtpm8cyjYVQDrjs8YpZH7zBNWPuY'}),	
+	Md2Module,
+	BsModalModule 
+  ],	
   declarations: [
-    AppComponent,
+    AppComponent,	
     DashboardComponent,
     UserComponent,
     TableComponent,
@@ -77,26 +100,7 @@ import { CategoryviewComponent } from './categoryview/categoryview.component';
     CategoryaddComponent,
     CategoryeditComponent,
     CategoryviewComponent,
-  ],
-  imports: [
-    BrowserModule,
-	HttpModule,
-    RouterModule.forRoot(AppRoutes),
-	RouterModule.forRoot(LoginRoutes),
-	//PopupModule, 
-    SidebarModule,
-    NavbarModule,
-    FooterModule,
-    FixedPluginModule,
-	HttpClientModule,
-	ReactiveFormsModule,
-	FormsModule,
-	CKEditorModule,
-	//ModalModule,
-    //DatePickerModule,	
-    NguiMapModule.forRoot({apiUrl: 'https://maps.google.com/maps/api/js?key=AIzaSyBr-tgUtpm8cyjYVQDrjs8YpZH7zBNWPuY'})
-
-  ],
+  ],  
   providers: [],
   bootstrap: [AppComponent]
 })

@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit , ViewChild } from '@angular/core';
 import { ActivatedRoute, Router} from '@angular/router';
 import { FormBuilder, Validators, FormGroup, FormControl } from '@angular/forms';
 import { Http, RequestOptions } from '@angular/http';
@@ -12,14 +12,22 @@ import {HttpClient} from '@angular/common/http';
 export class AdminloginComponent implements OnInit {
 
     private submitted =false;
+	private forgotpasswordsubmitted = false;
     loginForm:FormGroup;
+	forgotpasswordForm:FormGroup;
 	private userUrl = "http://localhost:8081/";
+	private successmessage;
+	private errormessage;
 	
     constructor(private route: ActivatedRoute, private router: Router, private http: HttpClient, private formBuilder: FormBuilder) { 
         this.loginForm = formBuilder.group({      
 			'username':[null, Validators.required],      
 			'password':[null, Validators.required]
-        });  
+        });
+
+        this.forgotpasswordForm = formBuilder.group({      
+			'email':[null, Validators.required],      			
+        });		
     }
 
     ngOnInit() {
@@ -44,4 +52,23 @@ export class AdminloginComponent implements OnInit {
 		}
 	}
 
+	sendmail(){
+		this.forgotpasswordsubmitted = true;
+		if(this.forgotpasswordForm.valid){
+			this.http.post(this.userUrl+"recoverpassword", this.forgotpasswordForm.value).subscribe(result=>{
+			    if(result['success']==1){
+				   this.successmessage = result['message'];
+				   this.errormessage = "";
+				}
+				else {
+				   this.errormessage = result['message'];
+				   this.successmessage = "";
+				}
+			});
+		}
+	} 
+	
+	removerows(){
+        		
+	}
 }

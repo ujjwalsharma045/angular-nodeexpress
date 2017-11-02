@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit , ViewChild} from '@angular/core';
 import { ActivatedRoute, Router} from '@angular/router';
 import { UserService } from '../services/user.service';
 import { FormBuilder, Validators,FormGroup,FormControl } from '@angular/forms';
@@ -8,6 +8,7 @@ import {Http, Response, Headers, RequestOptions } from '@angular/http';
 import {URLSearchParams} from '@angular/http';
 import {HttpClient} from '@angular/common/http';
 import { PagerService } from '../services/pager.service';
+import { BsModalComponent } from 'ng2-bs3-modal';
 import 'rxjs/Rx';
 @Component({
     selector: 'users-cmp', 
@@ -30,6 +31,7 @@ export class UsersComponent implements OnInit{
        sorttype:'asc',
        searchcontent:''	   
     };
+		
     private submitted;
     private allItems: any; 
     private pageSize: any; 
@@ -44,6 +46,9 @@ export class UsersComponent implements OnInit{
     private sectionTitle = 'Users';
     private userUrl = 'http://localhost:8081/';
 	
+	@ViewChild('myModal')
+	modal: BsModalComponent;
+	//private md2-dialog: Md2Module;
 	constructor(private route: ActivatedRoute, private router: Router, private http: HttpClient,  private formBuilder: FormBuilder , private pagerService:PagerService) {    
         /*if(!userService.is_loggedin()){			
 	       router.navigate(['./login']);
@@ -97,6 +102,7 @@ export class UsersComponent implements OnInit{
     }
 	
     deleteUser(){
+		this.modal.close();
 	    this.removeUser(this.deleteuserid).subscribe(result => {
 		    if(result['success']=="1"){
 			   location.reload();
@@ -155,8 +161,10 @@ export class UsersComponent implements OnInit{
     }
 
     deleteUserConfirm(id){
+		//alert(id);
 	    this.deleteuserid = id;
-         		
+        this.modal.open();
+
 	    /*this.popup.options = {
 			header: "Your custom header",
 			color: "#5cb85c", // red, blue.... 
@@ -172,4 +180,8 @@ export class UsersComponent implements OnInit{
 	   
 	    this.popup.show(this.popup.options);*/
     }
+	
+	confirmremove(){
+		this.deleteUser();
+	}
 }
