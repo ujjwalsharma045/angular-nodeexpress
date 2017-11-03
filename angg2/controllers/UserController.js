@@ -974,7 +974,7 @@ module.exports = function(app , func , mail, upload, storage, mailer, multer, va
 
     app.get('/user/recoverpassword', function(req, res){
          User.find({email:req.query.email} , function(err, records){
-			     console.log(records);
+			     console.log(req.query.email);
                  if(records.length>0){									
 					var currentdate = new Date();
                     var formatteddate = dateFormat(currentdate ,'yyyy-mm-dd HH:MM:ss');
@@ -1025,13 +1025,13 @@ module.exports = function(app , func , mail, upload, storage, mailer, multer, va
 								});
 								
                                 res.setHeader('Content-Type', 'application/json');
-				                res.send(JSON.stringify({'success':1, 'authen':0}));  														
+				                res.send(JSON.stringify({'success':1, 'authen':0 , 'message':'Recovery email sent successfully'}));  														
 						});						   					                            
 					 });
 				 }
                  else {
 				    res.setHeader('Content-Type', 'application/json');
-				    res.send(JSON.stringify({'error':1, 'authen':0 , 'error':'Email does not exists in system'}));
+				    res.send(JSON.stringify({'error':1, 'authen':0 , 'message':'Email does not exists in system'}));
 			     }			 
 		 });       		
 	});

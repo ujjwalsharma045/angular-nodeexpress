@@ -55,7 +55,7 @@ export class AdminloginComponent implements OnInit {
 	sendmail(){
 		this.forgotpasswordsubmitted = true;
 		if(this.forgotpasswordForm.valid){
-			this.http.post(this.userUrl+"recoverpassword", this.forgotpasswordForm.value).subscribe(result=>{
+			this.http.get(this.userUrl+"user/recoverpassword?email="+this.forgotpasswordForm.value.email).subscribe(result=>{
 			    if(result['success']==1){
 				   this.successmessage = result['message'];
 				   this.errormessage = "";
