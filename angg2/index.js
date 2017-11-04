@@ -194,8 +194,16 @@ var cors = require('cors');
 app.use(cors());
 app.use(express.static('public'));
 app.set('adminemail' , 'watermark0913@gmail.com');
+app.set('views', __dirname + '/views');
 app.set('view engine' , 'ejs');
 app.set('captcha_secretkey' , '6LdqGSIUAAAAACWfT13RKusonYoknI1ge9-_k9qu');
+
+app.set('paymentapi_username' , 'ujjwal.sharma045_api1.gmail.com');
+app.set('paymentapi_password' , 'TZZN7CYF6Y6EYXSQ');
+app.set('paymentapi_signature' , 'AD6Zp97B1n66jaNKGdzKoPdDMZdSAVEi2h-71HlbfnNKaSvi3IYNTE5n');
+app.set('paymentapi_returnurl' , 'http://localhost:8081/payment/verification');
+app.set('paymentapi_cancelurl' , 'http://localhost:8081/payment/cancel');
+
 app.use(cookieParser()); 
 //app.use(bodyParser.urlencoded())
 app.engine('html', require('ejs').renderFile);

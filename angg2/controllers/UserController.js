@@ -6,7 +6,8 @@ module.exports = function(app , func , mail, upload, storage, mailer, multer, va
   	var filereader = require('xlsx-to-json-lc');
     var async = require('async');	
 	
-
+	var Paypal = require('paypal-express-checkout');
+	var paypal = Paypal.init(app.get('paymentapi_username'), app.get('paymentapi_password'), app.get('paymentapi_signature'), app.get('paymentapi_returnurl'), app.get('paymentapi_cancelurl'), true);
 
     var readHTMLFile = function(path, callback) {
 		fs.readFile(path, {encoding: 'utf-8'}, function (err, html) {
@@ -1291,5 +1292,76 @@ module.exports = function(app , func , mail, upload, storage, mailer, multer, va
 					   }
 		    });		   		   
 	    });			
+	});
+	
+    app.all("/user/pay" , function(req , res){
+		if(req.method=="POST"){
+			
+			var data = {
+			    amount:req.body.amount,
+                currency:req.body.currency,
+                //device:req.body.device,
+				device:'iPad',
+                invoice:req.body.invoice				
+			};
+			console.log(data);			
+			paypal.pay(data.invoice, data.amount, data.device, data.currency, true, function(err, url) {
+				if (err) {
+					console.log(err);
+					return;
+				}
+                else {
+				    // redirect to paypal webpage
+				    res.redirect(url);
+				}
+			});
+		}
+		else {
+		   res.render("users/subscription" , {});
+		}
+	});	
+	
+	app.get("/payment/verification" , function(req , res){
+		if(req.query.token && req.query.PayerID){
+			
+			paypal.detail(req.query.token, req.query.PayerID, function(err, data, invoiceNumber, price){
+				if(err){
+					console.log(err);
+					return;
+				}	 				
+		
+				if(data.success){
+				   console.log('DONE, PAYMENT IS COMPLETED.' , data);
+				}
+				else {
+				   console.log('SOME PROBLEM:', data);
+				}
+	 
+				/*
+				data (object) =
+				{ TOKEN: 'EC-35S39602J3144082X',
+				  TIMESTAMP: '2013-01-27T08:47:50Z',
+				  CORRELATIONID: 'e51b76c4b3dc1',
+				  ACK: 'Success',
+				  VERSION: '52.0',
+				  BUILD: '4181146',
+				  TRANSACTIONID: '87S10228Y4778651P',
+				  TRANSACTIONTYPE: 'expresscheckout',
+				  PAYMENTTYPE: 'instant',
+				  ORDERTIME: '2013-01-27T08:47:49Z',
+				  AMT: '10.00',
+				  TAXAMT: '0.00',
+				  CURRENCYCODE: 'EUR',
+				  PAYMENTSTATUS: 'Pending',
+				  PENDINGREASON: 'multicurrency',
+				  REASONCODE: 'None' };
+				*/
+                res.render("users/subscriptionresult" , {});				
+			});						
+		}
+		else {
+			res.render("users/subscriptionresult" , {data:data});
+		}
+		
 	});
 }
