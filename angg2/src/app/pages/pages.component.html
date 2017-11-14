@@ -7,8 +7,8 @@
                         <h4 class="title">Pages</h4>
                        <p class="category">List of pages</p>
 					</div>   
-					<div class="" style="margin-left:85%;float:left">
-						<a [routerLink]="['../page/add']" class="btn btn-info btn-fill btn-wd">
+					<div class=""  style="margin-left:85%;float:left">
+						<a [routerLink]="['../page/add']" hovering class="btn btn-info btn-fill btn-wd">
 							Add Page
 						</a>
 					</div>                    
@@ -17,7 +17,7 @@
 				<div class="header">
 				    <div class="" style="float:left">
 					    <form [formControl]="searchForm">
-                          <input type="text" [formControl]="searchForm.controls['searchcontent']" name="searchcontent" id="searchcontent"/>
+                          <input focusing type="text" [formControl]="searchForm.controls['searchcontent']" name="searchcontent" id="searchcontent"/>
 						  <div *ngIf="searchForm.controls['searchcontent'].hasError('required') && submitted" class="alert alert-danger">Enter Value.</div>          
 						  <input type="button" (click)="searchPage()" value="Search"/>
 						</form> 
@@ -111,8 +111,8 @@
 							</li>
 						</ul>
                     </div>
-
                 </div>
+				
             </div>
         </div>       
     </div>

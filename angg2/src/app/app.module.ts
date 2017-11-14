@@ -43,6 +43,12 @@ import { CategoryeditComponent } from './categoryedit/categoryedit.component';
 import { CategoryviewComponent } from './categoryview/categoryview.component';
 import { Md2Module }  from 'md2';
 import { BsModalModule } from 'ng2-bs3-modal';
+import { FocusingDirective } from './directives/directives';
+import { HoveringDirective } from './directives/directives2';
+import { LinkhoveringDirective } from './directives/directives3';
+import { BoldDirective } from './directives/directives4';
+import { ShowcategoyListDirective } from './directives/directives5';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 //import {PopupModule} from 'ng2-opd-popup';
 //import {DatePickerModule} from 'ng2-datepicker-bootstrap';
 //import {ModalModule} from "ng2-modal";
@@ -67,7 +73,8 @@ import { BsModalModule } from 'ng2-bs3-modal';
     //DatePickerModule,    
     NguiMapModule.forRoot({apiUrl: 'https://maps.google.com/maps/api/js?key=AIzaSyBr-tgUtpm8cyjYVQDrjs8YpZH7zBNWPuY'}),	
 	Md2Module,
-	BsModalModule 
+	BsModalModule,
+    BrowserAnimationsModule	
   ],	
   declarations: [
     AppComponent,	
@@ -100,6 +107,11 @@ import { BsModalModule } from 'ng2-bs3-modal';
     CategoryaddComponent,
     CategoryeditComponent,
     CategoryviewComponent,
+	FocusingDirective,
+	HoveringDirective,
+	LinkhoveringDirective,
+	BoldDirective,
+	ShowcategoyListDirective
   ],  
   providers: [],
   bootstrap: [AppComponent]

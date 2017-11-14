@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild, Directive, ElementRef, HostListener, Input  } from '@angular/core';
 import { ActivatedRoute, Router} from '@angular/router';
 import { FormBuilder, Validators,FormGroup,FormControl } from '@angular/forms';
 import { Observable } from 'rxjs/Observable';
@@ -13,8 +13,9 @@ import { BsModalComponent } from 'ng2-bs3-modal';
   selector: 'pages-cmp',
   templateUrl: './pages.component.html',
   styleUrls: ['./pages.component.css'],
-  providers:[PagerService] 
+  providers:[PagerService],
 })
+
 
 export class PagesComponent implements OnInit {
 	searchForm:FormGroup;
