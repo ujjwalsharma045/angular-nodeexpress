@@ -104,4 +104,8 @@ export class CategoryaddComponent implements OnInit {
       // 1-line if statement that toggles the value:
        this.titlestate = this.titlestate === 'out' ? 'in' : 'out';
     }
+	
+	resetform(){
+		this.categoryForm.reset();
+	}
 }

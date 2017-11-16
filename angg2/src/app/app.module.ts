@@ -1,4 +1,5 @@
 import { BrowserModule } from '@angular/platform-browser';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { NgModule } from '@angular/core';
 import { FormsModule, ReactiveFormsModule  } from '@angular/forms';
 import { RouterModule } from '@angular/router';
@@ -48,7 +49,8 @@ import { HoveringDirective } from './directives/directives2';
 import { LinkhoveringDirective } from './directives/directives3';
 import { BoldDirective } from './directives/directives4';
 import { ShowcategoyListDirective } from './directives/directives5';
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { ServiceComponent } from './service/service.component';
+import { ServiceeditComponent } from './serviceedit/serviceedit.component';
 //import {PopupModule} from 'ng2-opd-popup';
 //import {DatePickerModule} from 'ng2-datepicker-bootstrap';
 //import {ModalModule} from "ng2-modal";
@@ -56,6 +58,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 @NgModule({
   imports: [
     BrowserModule,
+	//BrowserAnimationsModule,
 	HttpModule,
     RouterModule.forRoot(AppRoutes),
 	RouterModule.forRoot(LoginRoutes),
@@ -73,8 +76,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
     //DatePickerModule,    
     NguiMapModule.forRoot({apiUrl: 'https://maps.google.com/maps/api/js?key=AIzaSyBr-tgUtpm8cyjYVQDrjs8YpZH7zBNWPuY'}),	
 	Md2Module,
-	BsModalModule,
-    BrowserAnimationsModule	
+	BsModalModule,	
   ],	
   declarations: [
     AppComponent,	
@@ -111,7 +113,9 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 	HoveringDirective,
 	LinkhoveringDirective,
 	BoldDirective,
-	ShowcategoyListDirective
+	ShowcategoyListDirective,
+	ServiceComponent,
+	ServiceeditComponent
   ],  
   providers: [],
   bootstrap: [AppComponent]

@@ -1,0 +1,102 @@
+<div class="container-fluid">
+	<div class="row">
+		<div class="col-lg-8 col-md-7">
+			<div class="card">
+				<div class="header">				   
+					<h4 class="title">Add Service</h4>
+				</div>
+				
+				<div style="padding-top:10px;padding-bottom:10px">{{flashMessage}}</div>
+				
+				<div class="content">
+					<form #serviceForm="ngForm" (ngSubmit)="serviceAdd(serviceForm)" novalidate>					
+						<div class="row">
+							<div class="col-md-12">
+								<div class="form-group">
+									<label>Title</label>
+									<input type="text" name="title" [(ngModel)]="service.title" #title="ngModel" class="form-control border-input" placeholder="Title" value="" required>
+									<div *ngIf="title.invalid  && submitted" class="alert alert-danger">Enter title.</div>          
+								</div>
+							</div>
+						</div>
+						
+                        <div class="row">						
+							<div class="col-md-12">
+								<div class="form-group">
+									<label for="exampleInputEmail1">Content</label>
+									<ckeditor  name="content" [(ngModel)]="service.content" #content="ngModel" [config]="{uiColor: '#99000'}" required></ckeditor>									
+									<div *ngIf="content.invalid  && submitted" class="alert alert-danger">Enter Content.</div>          
+								</div>
+							</div>
+						</div>
+						
+						<div class="row">						
+							<div class="col-md-12">
+								<div class="form-group">
+									<label>User Type</label>
+									<select name="usertype" [(ngModel)]="service.usertype" #usercategory="ngModel" class="form-control border-input" (change)="setUsers(serviceForm)">
+									   <option value="A">Authenticated</option>
+									   <option value="G">Guest</option>
+									</select>								
+									<div *ngIf="usercategory.invalid  && submitted" class="alert alert-danger">
+									   Select user type.
+									</div>          
+								</div>
+							</div>
+						</div>
+
+						<div class="row" *ngIf="serviceForm.value.usertype=='A'">						
+							<div class="col-md-12">
+								<div class="form-group">
+									<label>Users</label>
+									<select name="users" [(ngModel)]="service.users" #userspart="ngModel" class="form-control border-input" (change)="setUserType(serviceForm)">
+									   <option value="A">All</option>
+									   <option value="S">Specific</option>
+									</select>								
+									<div *ngIf="serviceForm.value.usertype=='A' && (serviceForm.value.users=='' || !serviceForm.value.users) && submitted" class="alert alert-danger">
+									   Select user.
+									</div>          
+								</div>
+							</div>
+						</div>
+									
+						<div class="row" *ngIf="serviceForm.value.usertype=='A' && serviceForm.value.users=='S'">						
+							<div class="col-md-12">
+								<div class="form-group">
+									<label>Users List</label>
+									<select name="userslist" [(ngModel)]="service.userslist" #userslistdetail="ngModel" class="form-control border-input" multiple="multiple">
+									   <option value="first">first</option>
+									   <option value="second">second</option>
+									</select>								
+									<div *ngIf="serviceForm.value.usertype=='A' && serviceForm.value.users=='S' && (serviceForm.value.userslist=='' || !serviceForm.value.userslist) && submitted" class="alert alert-danger">
+									   Select user.
+									</div>          
+								</div>
+							</div>
+						</div>
+						
+                        <div class="row">						
+							<div class="col-md-12">
+								<div class="form-group">
+									<label>Status</label>
+									<select name="status" [(ngModel)]="service.status" #status="ngModel" class="form-control border-input" required>
+									   <option value="A">Active</option>
+									   <option value="I">Inactive</option>
+									</select>								
+									<div *ngIf="status.invalid  && submitted" class="alert alert-danger">Select status.</div>          
+								</div>
+							</div>
+						</div>
+												
+						<div class="text-center">
+							<button class="btn btn-info btn-fill btn-wd">Submit</button>
+						</div>
+						
+						<div class="clearfix"></div>
+					</form>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+
