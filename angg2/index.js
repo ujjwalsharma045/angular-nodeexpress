@@ -390,6 +390,7 @@ require('./controllers/PageController')(app , func , mail, upload, storage, mail
 require('./controllers/ProductController')(app , func , mail, upload, storage, mailer, multer, validator, Product, paginate , cors , dateFormat, dateDiff , dobByAge , json2csv , excelexport , pdf , passport , LocalStrategy, bCrypt, fs, async, PasswordGenerate, randtoken, handlebars);
 
 require('./controllers/CategoryController')(app , func , mail, upload, storage, mailer, multer, validator, Category, paginate , cors , dateFormat, dateDiff , dobByAge , json2csv , excelexport , pdf , passport , LocalStrategy, bCrypt, fs, async, PasswordGenerate, randtoken, handlebars);
+require('./controllers/FaqController')(app , func , mail, upload, storage, mailer, multer, validator, Services, paginate, cors);
 //require('./crons/crons')(schedule, mail, mailer, User);
 
 app.use(function(req, res) {

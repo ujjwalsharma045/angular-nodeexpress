@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, VERSION } from '@angular/core';
 import { ActivatedRoute, Router} from '@angular/router';
 import { Http, Response, Headers, RequestOptions } from '@angular/http';
 import { NgForm } from '@angular/forms';
@@ -21,7 +21,7 @@ export class SettingsComponent implements OnInit {
 	   
     }
 
-    ngOnInit() {
+    ngOnInit() {		
 	    this.http.get(this.settingUrl+"setting/list").subscribe(result => {
 		    console.log(result);
 		    if(result['success']=="1"){
@@ -31,7 +31,9 @@ export class SettingsComponent implements OnInit {
     }
 	
 	update(){
-	    console.log(this.settings);		
+	    console.log(this.settings);	
+        console.log(VERSION.full);
+        
         this.save(this.settings).subscribe(result => {
 			console.log(result);
 			if(result['success']=="1"){

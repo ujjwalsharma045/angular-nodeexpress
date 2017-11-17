@@ -12,8 +12,13 @@ import {HttpClient} from '@angular/common/http';
 export class ServiceComponent implements OnInit {
      
 	private submitted = false; 
-    constructor() { }
+	
+    constructor(private route:ActivatedRoute, private router:Router, private http:HttpClient) { 
+	
+	}
+	
     private service;
+	private serviceUrl = "http://localhost:8081/";
 	
     ngOnInit() {
 		this.service = {
@@ -24,7 +29,12 @@ export class ServiceComponent implements OnInit {
     serviceAdd(serviceForm){		
 		this.submitted = true;
 		if(serviceForm.valid){
-		   	
+			var service = serviceForm.value;
+		   	return this.http.post(this.serviceUrl+"faqs/add" , service).subscribe(result => {
+			    if(result['success']=="1"){
+				   
+			    }
+		    });
 		}	    	 
     }
 	

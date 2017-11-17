@@ -114,11 +114,11 @@ module.exports = function(app , func , mail, upload, storage, mailer, multer, va
 
            if(error.length<=0){		      
                 data = {
-					   title:req.body.title.trim(),
-					   description:req.body.description.trim(),
-					   price:req.body.price.trim(),
-					   cost:req.body.cost.trim(),
-					   status:req.body.status.trim()			  
+					title:req.body.title.trim(),
+					description:req.body.description.trim(),
+					usertype:req.body.price.trim(),
+					usertype:req.body.price.trim(),
+					status:req.body.status.trim()			  
 		        };
 				
 				var detail = new Services(data);
@@ -177,20 +177,21 @@ module.exports = function(app , func , mail, upload, storage, mailer, multer, va
 
            if(error.length<=0){
 		      
-			  var data = {
+			    var data = {
 				   title:req.body.title.trim(),
 				   description:req.body.description.trim(),
 				   price:req.body.price.trim(),
 				   cost:req.body.cost.trim(),
 				   status:req.body.status.trim()			  
-		      };
+		        };
 					 
-              Services.findOneAndUpdate({ _id: serviceid }, data, function(err, services) {
-				  if (err) throw err;				 
-				  console.log(services);
-				  sess.flashmessage = "Service detail updated successfully";
-				  res.redirect("../");
-               });               			 
+                Services.findOneAndUpdate({ _id: serviceid }, data, function(err, services) {
+				    if(err) 
+					  throw err;				 
+				    console.log(services);
+				    sess.flashmessage = "Service detail updated successfully";
+				    res.redirect("../");
+                });               			 
 		    }
 		 }
         		

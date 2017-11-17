@@ -18,7 +18,7 @@
 				
 				<div class="header">
 				    <div class="" style="float:left">
-					    <form [formControl]="searchForm">
+					    <form [formGroup]="searchForm">
                           <input type="text" [formControl]="searchForm.controls['searchcontent']" name="searchcontent" id="searchcontent"/>
 						  <div *ngIf="searchForm.controls['searchcontent'].hasError('required') && submitted" class="alert alert-danger">Enter Value.</div>          
 						  <input type="button" (click)="searchCategory()" value="Search"/>
