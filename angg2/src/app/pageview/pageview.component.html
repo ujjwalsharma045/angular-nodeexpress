@@ -34,11 +34,11 @@
                             </div>
 							
                             <div class="col-md-4">
-                                <h5>{{pageDetail.status}}</h5><br /><small>Status</small>
+                                <h5>{{pageDetail.status | statusformat}}</h5><br /><small>Status</small>
                             </div>
 							
 							<div class="col-md-4">
-                                <h5>{{pageDetail.created_at}}</h5><br /><small>Created</small>
+                                <h5>{{pageDetail.created_at | date:'dd MMMM yyyy hh:mm:ss'}}</h5><br /><small>Created</small>
                             </div>
                         </div>
                     </div>

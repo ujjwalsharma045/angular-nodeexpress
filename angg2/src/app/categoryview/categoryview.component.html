@@ -29,11 +29,11 @@
 							</div>
 							
                             <div class="col-md-4">
-                                <h5>{{categoryDetail.status}}</h5><br /><small>Status</small>
+                                <h5>{{categoryDetail.status | statusformat}}</h5><br /><small>Status</small>
                             </div>
 							
 							<div class="col-md-4">
-                                <h5>{{categoryDetail.created_at}}</h5><br /><small>Created</small>
+                                <h5>{{categoryDetail.created_at | date:'dd MMMM yyyy hh:ii:ss'}}</h5><br /><small>Created</small>
                             </div>
                         </div>
                     </div>

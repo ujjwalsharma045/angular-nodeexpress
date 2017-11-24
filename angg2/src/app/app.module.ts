@@ -51,6 +51,11 @@ import { BoldDirective } from './directives/directives4';
 import { ShowcategoyListDirective } from './directives/directives5';
 import { ServiceComponent } from './service/service.component';
 import { ServiceeditComponent } from './serviceedit/serviceedit.component';
+import { AppGlobals } from './services/app.global';
+import { PageService } from './services/page.service';
+import { Directive7Directive } from './directives/directive7.directive';
+import { StatusformatPipe } from './pipe/statusformat.pipe';
+import { Directive8Directive } from './directives/directive8.directive';
 //import {PopupModule} from 'ng2-opd-popup';
 //import {DatePickerModule} from 'ng2-datepicker-bootstrap';
 //import {ModalModule} from "ng2-modal";
@@ -115,9 +120,12 @@ import { ServiceeditComponent } from './serviceedit/serviceedit.component';
 	BoldDirective,
 	ShowcategoyListDirective,
 	ServiceComponent,
-	ServiceeditComponent
+	ServiceeditComponent,
+	Directive7Directive,
+	StatusformatPipe,
+	Directive8Directive,
   ],  
-  providers: [],
+  providers: [AppGlobals , PageService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

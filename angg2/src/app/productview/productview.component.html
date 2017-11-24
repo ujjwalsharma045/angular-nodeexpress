@@ -32,13 +32,32 @@
                             <div class="col-md-4">							
 								<h5 [innerHTML]="productDetail.description"></h5><br /><small >Description</small>
                             </div>
-							
-                            <div class="col-md-4">
-                                <h5>{{productDetail.status}}</h5><br /><small>Status</small>
+						</div>
+                        <div class="row">						
+                            <div class="col-md-6">
+                                <h5>{{productDetail.status | statusformat}}</h5><br /><small>Status</small>
                             </div>
 							
-							<div class="col-md-4">
-                                <h5>{{productDetail.created_at}}</h5><br /><small>Created</small>
+							<div class="col-md-6">
+                                <h5>{{productDetail.created_at | date:'dd MMMM yyyy hh:mm:ss'}}</h5><br /><small>Created</small>
+                            </div>
+						</div>
+                        <div class="row">							
+							<div class="col-md-6">
+                                <h5>{{productDetail.cost_price | currency:'USD':true }}</h5><br /><small>Cost Price</small>
+                            </div>
+							
+							<div class="col-md-6">
+                                <h5>{{productDetail.price | currency:'USD':true:'2.2-5'}}</h5><br /><small>Price</small>
+                            </div>
+                        </div>
+						<div class="row">							
+							<div class="col-md-6">
+                                <h5>{{productDetail.discount_type}}</h5><br /><small>Discount Type</small>
+                            </div>
+							
+							<div class="col-md-6">
+                                <h5>{{productDetail.discount/100 | percent:'2.2-2'}}</h5><br /><small>Discount</small>
                             </div>
                         </div>
                     </div>

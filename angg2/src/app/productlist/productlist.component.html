@@ -8,7 +8,7 @@
                        <p class="category">List of Product</p>
 					</div>   
 					<div class="" style="margin-left:85%;float:left">
-						<a [routerLink]="['../product/add']" class="btn btn-info btn-fill btn-wd">
+						<a [routerLink]="['../product/add']" hovering class="btn btn-info btn-fill btn-wd">
 							Add Product
 						</a>
 					</div>                    
@@ -75,8 +75,8 @@
                             <tr *ngFor="let product of productdetail">
                                 <td>{{product._id}}</td>
 							    <td>{{product.title}}</td>
-							    <td>{{product.status}}</td>
-							    <td>{{product.created_at}}</td>
+							    <td>{{product.status | statusformat}}</td>
+							    <td>{{product.created_at | date:'dd MMMM yyyy hh:mm:ss'}}</td>
 								<td>
 								    <a [routerLink]="['../product/view' , product._id]">
 								       <i class="fa fa-eye" aria-hidden="true"></i>

@@ -9,7 +9,7 @@
                         <p class="category">List of users</p>
 					</div>   
 					<div class="" style="margin-left:85%;float:left">
-						<a [routerLink]="['../user/add']" class="btn btn-info btn-fill btn-wd">
+						<a [routerLink]="['../user/add']" hovering class="btn btn-info btn-fill btn-wd">
 							Add User
 						</a>
 					</div>
@@ -78,7 +78,7 @@
                                 <td>{{user._id}}</td>
 							    <td>{{user.first_name}} {{user.last_name}}</td>
 							    <td>{{user.email}}</td>
-							    <td>{{user.created_at}}</td>
+							    <td>{{user.created_at | date:'dd  MMMM, yyyy hh:mm:ss'}}</td>
 								<td>
 								    <a [routerLink]="['../user/view' , user._id]">
 									   <i class="fa fa-eye" aria-hidden="true"></i>

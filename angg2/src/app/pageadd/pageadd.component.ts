@@ -3,25 +3,27 @@ import { ActivatedRoute, Router} from '@angular/router';
 import { FormBuilder, Validators,FormGroup,FormControl } from '@angular/forms';
 import { Http, RequestOptions } from '@angular/http';
 import {HttpClient} from '@angular/common/http';
-
-
+import {AppGlobals} from '../services/app.global';
+import {PageService} from '../services/page.service';
 @Component({
   selector: 'pageadd-cmp',
   templateUrl: './pageadd.component.html',
-  styleUrls: ['./pageadd.component.css']
+  styleUrls: ['./pageadd.component.css'],
+  providers:[PageService]
 })
 
 export class PageaddComponent implements OnInit {
     pageForm:FormGroup;
     private submitted =false;
-	pageUrl = "http://localhost:8081/";
+	pageUrl = "";
 	private flashMessage;
-    constructor(private route: ActivatedRoute, private router: Router, private http: HttpClient, private formBuilder: FormBuilder) { 
+    constructor(private route: ActivatedRoute, private router: Router, private http: HttpClient, private formBuilder: FormBuilder, private _global:AppGlobals , private pageservice:PageService) { 
         this.pageForm = formBuilder.group({      
 			'title':[null, Validators.required],      
 			'content':[null, Validators.required],
 			'status':[null, Validators.required]			
         });  
+		this.pageUrl = _global.baseApiUrl;
     }
 
     ngOnInit() {
@@ -31,7 +33,7 @@ export class PageaddComponent implements OnInit {
     pageAdd(){
 	    this.submitted =true;
 	    if(this.pageForm.valid){
-		    this.add(this.pageForm.value).subscribe(result => {
+		    this.pageservice.add(this.pageUrl , this.pageForm.value).subscribe(result => {
 				  //console.log(result);
 				  if(result['success']=="1"){
 					 localStorage.setItem('message' , result['message']); 
@@ -43,8 +45,4 @@ export class PageaddComponent implements OnInit {
 			});
 	    } 
     }
-	
-	add(page){
-		return this.http.post(this.pageUrl+"page/add" , page);
-	}
 }

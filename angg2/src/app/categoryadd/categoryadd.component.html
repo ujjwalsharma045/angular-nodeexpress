@@ -39,7 +39,7 @@
 							<div class="col-md-12">
 								<div class="form-group">
 									<label>Title</label>
-									<input type="text" [formControl]="categoryForm.controls['title']" class="form-control border-input" placeholder="Title" value="">
+									<input type="text" appDirective7 [formControl]="categoryForm.controls['title']" class="form-control border-input" placeholder="Title" value="">
 									<div *ngIf="categoryForm.controls['title'].hasError('required') && submitted" class="alert alert-danger">Enter title.</div>          
 								</div>
 							</div>
@@ -49,7 +49,7 @@
 							<div class="col-md-12">
 								<div class="form-group">
 									<label for="exampleInputEmail1">Content</label>
-									<ckeditor  [formControl]="categoryForm.controls['description']" [config]="{uiColor: '#99000'}"></ckeditor>
+									<ckeditor  appDirective7 [formControl]="categoryForm.controls['description']" [config]="{uiColor: '#99000'}"></ckeditor>
 									<!-- <textarea [formControl]="pageForm.controls['content']" class="form-control border-input" placeholder="Content"></textarea> -->
 									<div *ngIf="categoryForm.controls['description'].hasError('required') && submitted" class="alert alert-danger">Enter Description.</div>          
 								</div>
@@ -60,7 +60,7 @@
 							<div class="col-md-12">
 								<div class="form-group">
 									<label for="exampleInputEmail1">Meta Tag</label>									
-									<textarea [formControl]="categoryForm.controls['meta_tag']" class="form-control border-input" placeholder="Meta Tag"></textarea>
+									<textarea appDirective7 [formControl]="categoryForm.controls['meta_tag']" class="form-control border-input" placeholder="Meta Tag"></textarea>
 									<div *ngIf="categoryForm.controls['meta_tag'].hasError('required') && submitted" class="alert alert-danger">Enter Meta Tag.</div>          
 								</div>
 							</div>
@@ -70,7 +70,7 @@
 							<div class="col-md-12">
 								<div class="form-group">
 									<label for="exampleInputEmail1">Meta Description</label>
-									<textarea [formControl]="categoryForm.controls['meta_description']" class="form-control border-input" placeholder="Meta Description"></textarea>
+									<textarea appDirective7 [formControl]="categoryForm.controls['meta_description']" class="form-control border-input" placeholder="Meta Description"></textarea>
 									<div *ngIf="categoryForm.controls['meta_description'].hasError('required') && submitted" class="alert alert-danger">Enter Meta Description.</div>          
 								</div>
 							</div>
@@ -80,7 +80,7 @@
 							<div class="col-md-12">
 								<div class="form-group">
 									<label>Order</label>
-									<input type="text" [formControl]="categoryForm.controls['order']" class="form-control border-input" placeholder="Cost Price" value="">
+									<input type="text" appDirective7 [formControl]="categoryForm.controls['order']" class="form-control border-input" placeholder="Cost Price" value="">
 									<div *ngIf="categoryForm.controls['order'].hasError('required') && submitted" class="alert alert-danger">Enter cost price.</div>          
 								</div>
 							</div>
@@ -100,7 +100,7 @@
 						</div>												
 
 						<div class="text-center">
-							<button type="button" (click)="addcategory()" class="btn btn-info btn-fill btn-wd">Submit</button>
+							<button type="button" appDirective8 (click)="addcategory()" class="btn btn-info btn-fill btn-wd">Submit</button>
 							<button type="button" (click)="resetform()" class="btn btn-info btn-fill btn-wd">Reset</button>
 						</div>
 						<div class="clearfix"></div>

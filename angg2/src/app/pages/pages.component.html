@@ -76,8 +76,8 @@
                             <tr *ngFor="let page of pagedetail">
                                 <td>{{page._id}}</td>
 							    <td>{{page.title}}</td>
-							    <td>{{page.status}}</td>
-							    <td>{{page.created_at}}</td>
+							    <td>{{page.status | statusformat}}</td>
+							    <td>{{page.created_at | date:'dd MMMM yyyy hh:mm:ss'}}</td>
 								<td>
 								    <a [routerLink]="['../page/view' , page._id]">
 								       <i class="fa fa-eye" aria-hidden="true"></i>

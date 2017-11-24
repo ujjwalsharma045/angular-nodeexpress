@@ -13,8 +13,7 @@ export class HoveringDirective {
 	constructor(private elRef: ElementRef){
 		
 	}
-	    
-	
+	    	
 	onMouseover(){
 		this.elRef.nativeElement.style.backgroundColor = "green";
 	}

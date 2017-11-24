@@ -8,7 +8,7 @@
                        <p class="category">List of Category</p>
 					</div>   
 					<div class="" style="margin-left:85%;float:left">
-						<a [routerLink]="['../category/add']" class="btn btn-info btn-fill btn-wd">
+						<a [routerLink]="['../category/add']" hovering class="btn btn-info btn-fill btn-wd">
 							Add Category
 						</a>
 					</div>
@@ -86,8 +86,8 @@
                                 <td>{{category._id}}</td>
 							    <td>{{category.title}}</td>
 							    <td>{{category.order}}</td>
-								<td>{{category.status}}</td>
-							    <td>{{category.created_at}}</td>
+								<td>{{category.status | statusformat}}</td>
+							    <td>{{category.created_at | date:'dd MMMM yyyy hh:mm:ss'}}</td>
 								<td>
 								    <a [routerLink]="['../category/view' , category._id]">
 									   <i class="fa fa-eye" aria-hidden="true"></i>

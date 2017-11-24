@@ -8,12 +8,14 @@ import {URLSearchParams} from '@angular/http';
 import {HttpClient} from '@angular/common/http';
 import { PagerService } from '../services/pager.service';
 import { BsModalComponent } from 'ng2-bs3-modal';
+import { AppGlobals } from '../services/app.global';
+import { PageService } from '../services/page.service';
 
 @Component({
   selector: 'pages-cmp',
   templateUrl: './pages.component.html',
   styleUrls: ['./pages.component.css'],
-  providers:[PagerService],
+  providers:[PagerService , AppGlobals , PageService],
 })
 
 
@@ -38,15 +40,16 @@ export class PagesComponent implements OnInit {
     };
     private deletedpageid;
     private sectionTitle = 'Pages';
-    private pageUrl = 'http://localhost:8081/';
+    private pageUrl = '';
     
 	@ViewChild('myModal')
 	modal: BsModalComponent;
 	
-    constructor(private route: ActivatedRoute, private router: Router, private formBuilder: FormBuilder , private http:HttpClient , private pagerService:PagerService) { 
+    constructor(private route: ActivatedRoute, private router: Router, private formBuilder: FormBuilder , private http:HttpClient , private pagerService:PagerService , private _global:AppGlobals , private pageservice:PageService) { 
 	   this.searchForm = formBuilder.group({      
 			'searchcontent':[null, Validators.required]      			
        });
+	   this.pageUrl = _global.baseApiUrl;
 	}
 
     ngOnInit() {		
@@ -74,7 +77,7 @@ export class PagesComponent implements OnInit {
 				params.set(key, data[key]) 
 			}
 			
-			return this.http.get(this.pageUrl+"page/index?"+params.toString()).subscribe(result => {			   
+			return this.pageservice.lists(this.pageUrl , params.toString()).subscribe(result => {			   
 			   this.pagedetail  = result['records'];
 			   this.allItems = result['totalrecords'];
 			   this.pageSize = result['totalpages'];
