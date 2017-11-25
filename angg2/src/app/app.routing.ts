@@ -34,8 +34,8 @@ import { CategorylistComponent } from './categorylist/categorylist.component';
 import { CategoryaddComponent } from './categoryadd/categoryadd.component';
 import { CategoryeditComponent } from './categoryedit/categoryedit.component';
 import { CategoryviewComponent } from './categoryview/categoryview.component';
-import { ServiceComponent } from './service/service.component';
-import { ServiceeditComponent } from './serviceedit/serviceedit.component';
+//import { ServiceComponent } from './service/service.component';
+//import { ServiceeditComponent } from './serviceedit/serviceedit.component';
 
 export const AppRoutes: Routes = [
     {
@@ -216,7 +216,7 @@ export const AppRoutes: Routes = [
            { path: '', component:FooterComponent, outlet:'footer'}
 		],
     },
-	{
+	/* {
         path: 'service/add',
 		component:ServiceComponent,
 		data:{title:'Add Service'}		
@@ -225,7 +225,7 @@ export const AppRoutes: Routes = [
         path: 'service/edit/:id',
 		component:ServiceeditComponent,
 		data:{title:'Edit Service'}		
-    },
+    },*/
 ]
 
 export const LoginRoutes: Routes = [    
