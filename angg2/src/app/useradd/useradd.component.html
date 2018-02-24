@@ -108,6 +108,32 @@
 								</div>
 							</div>
 						</div>
+						
+						<div class="row">
+							<div class="col-md-12">
+								<div class="form-group">
+									<label>Day</label>
+									<select>
+									    <option  *appRange = "[1 , 31 , 'day']; let num=number" value="{{num}}">
+									        {{num}}
+									    </option>
+									</select>
+									<label>Month</label>
+									<select>
+									    <option  *appRange = "[1 , 12 , 'month']; let num=number; let month = monthname" value="{{num}}">
+									        {{month}} 
+									    </option>
+									</select>
+									<label>Year</label>
+									<select>
+									    <option  *appRange = "[1900 , 1996 , 'year']; let num=number" value="{{num}}">
+									        {{num}}
+									    </option>
+									</select>
+									<div *ngIf="userForm.controls['address'].hasError('required') && submitted" class="alert alert-danger">Enter address.</div>          
+								</div>
+							</div>
+						</div>
 
 						<div style="clear:both;padding-top:10px;" [innerHTML]="flashMessage"></div>
 						

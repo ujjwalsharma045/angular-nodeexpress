@@ -15,14 +15,16 @@ export class AppComponent{
 	
 	constructor(private route: ActivatedRoute, private router: Router){
  	    console.log(VERSION.full);
-	}
-	
-	ngOnInit() {
-		if(window.location.pathname!="/login" && window.location.pathname!="/register"){
+		if(!localStorage.getItem('is_loggedin')){
+			//alert("ee");
             this.isLogin = false; 
 		}
-		else {
+		else { 
+		    //alert("gg");
 			this.isLogin = true; 
 		}
+	}
+	
+	ngOnInit() {		
     }
 }

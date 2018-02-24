@@ -33,6 +33,9 @@
                     <table class="table table-striped">
                         <thead>
                             <tr>
+							    <th>									
+									SNO											
+							    </th>
                                 <th>
 									<a href="javascript:void(0)" (click)="sortlist('_id')">
 										ID		
@@ -82,11 +85,12 @@
                             </tr>
                         </thead>
                         <tbody>
-                            <tr *ngFor="let category of categoryDetail">
-                                <td>{{category._id}}</td>
+                            <tr *ngFor="let category of categoryDetail, let i =index">
+							    <td>{{i | numberconvert:1}}</td>
+							    <td>{{category._id}}</td>                                
 							    <td>{{category.title}}</td>
 							    <td>{{category.order}}</td>
-								<td>{{category.status | statusformat}}</td>
+								<td [innerHTML]="category.status | safeHtml | redhighlight:1"></td>
 							    <td>{{category.created_at | date:'dd MMMM yyyy hh:mm:ss'}}</td>
 								<td>
 								    <a [routerLink]="['../category/view' , category._id]">

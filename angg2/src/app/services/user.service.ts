@@ -23,5 +23,4 @@ export class UserService {
 			return this.http.get(this.userUrl+"showusers").map(res => res.json());
 		}	  
     }
-
 }

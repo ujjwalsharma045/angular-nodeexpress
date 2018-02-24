@@ -5,6 +5,8 @@ import { CategoryaddComponent } from '../categoryadd/categoryadd.component';
 import { CategoryeditComponent } from '../categoryedit/categoryedit.component';
 import { CategoryviewComponent } from '../categoryview/categoryview.component';
 import { SharedModule } from '../shared/shared.module';
+import { NumberconvertPipe } from '../numberconvert.pipe';
+import { RedhighlightPipe } from '../redhighlight.pipe'; 
 
 @NgModule({
   imports: [
@@ -15,13 +17,19 @@ import { SharedModule } from '../shared/shared.module';
     CategorylistComponent,
 	CategoryaddComponent,
 	CategoryeditComponent,
-	CategoryviewComponent	
+	CategoryviewComponent,
+    NumberconvertPipe,
+    RedhighlightPipe,
+    //SafeHtmlPipe	
   ],
   exports:[
     CategorylistComponent,
 	CategoryaddComponent,
 	CategoryeditComponent,
-	CategoryviewComponent,	
+	CategoryviewComponent,
+    NumberconvertPipe,
+    RedhighlightPipe,
+    //SafeHtmlPipe	
   ]
 })
 export class CategoriesModule { }

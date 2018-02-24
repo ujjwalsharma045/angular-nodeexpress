@@ -67,6 +67,8 @@ export class NavbarComponent implements OnInit{
     }
 	
 	logout(){
-		window.location.href = "/login";
+		//window.location.href = "/login";		
+		localStorage.removeItem('is_loggedin');
+		this.router.navigate(['./login']);
 	}
 }

@@ -1,0 +1,110 @@
+<div class="container-fluid">
+	<div class="row">
+		<div class="col-lg-8 col-md-7">
+			<div class="card">
+				<div class="header">
+					<h4 class="title">Add Slider</h4>
+				</div>
+				<div class="content">
+				    <form #slideraddForm="ngForm" novalidate>
+						<div>	
+ 
+                            <div class="row">
+								<div class="col-md-12">
+									<div class="form-group">						
+										<label>Title</label>
+										<input type="text" name="title"  [(ngModel)]="sliders.title" class="form-control border-input" #title="ngModel"  minlength="2"  required   
+										  appInvalidcharacter appEmailvalidator />
+									</div>
+									<div *ngIf="title.errors && submitted" >
+									    <div *ngIf="title.errors.required" class="alert alert-danger" >
+										   Enter title.
+										</div>   
+										<div *ngIf="title.errors.minlength" class="alert alert-danger" >
+										   Title should be of minimum 2 characters.
+										</div>
+                                        <div *ngIf="title.errors.appEmailvalidator" class="alert alert-danger" >
+										   Title name can not be vikas
+										</div>
+                                        <div *ngIf="title.errors.appInvalidcharacter" class="alert alert-danger" >
+										    Please enter valid title
+										</div>										
+									</div>
+								</div>								
+							</div>
+						 	
+                            <div class="row">
+								<div class="col-md-12">
+									<div class="form-group">						
+										<label>Description</label>
+										<input type="text" name="description" [(ngModel)]="sliders.description"  class="form-control border-input" #description="ngModel" appInvalidcharacter required  minlength="10"/>
+									</div>
+									<div *ngIf="description.errors && submitted">
+										<div *ngIf="description.errors.required" class="alert alert-danger" > 
+										    Enter description.
+										</div>   
+										<div *ngIf="description.errors.minlength" class="alert alert-danger" >
+										    Description should be of minimum 10 characters.
+										</div>
+										<div *ngIf="description.errors.appInvalidcharacter && !description.errors.minlength" class="alert alert-danger" >
+										    Please enter valid description
+										</div>
+									</div>
+								</div>								
+							</div>
+							
+							<div class="row">
+								<div class="col-md-12">
+									<div class="form-group">						
+										<label>Status</label>
+										<select name="status" [(ngModel)]="sliders.status"  class="form-control border-input" #status="ngModel" required >
+										     <option value="A">Active</option>
+											 <option value="I" selected>Inactive</option>
+										</select>
+									</div>
+									<div *ngIf="status.errors && submitted">
+										<div *ngIf="status.errors.required" class="alert alert-danger" >
+										    Select status
+										</div>   										
+									</div>
+								</div>								
+							</div>
+							
+							<div class="row">
+								<div class="col-md-12">
+									<div class="form-group">						
+										<label>Order</label>
+										<input type="text" name="order" [(ngModel)]="sliders.order"  class="form-control border-input" #order="ngModel" appOrdercheck />
+									</div>
+									<div *ngIf="order.errors && submitted">
+										<div *ngIf="order.errors.appOrdercheck" class="alert alert-danger" >
+										    Select Status as Active and Enter Order.
+										</div>
+										<div *ngIf="order.errors.numeric" class="alert alert-danger" >
+										    Order should be numeric.
+										</div>										
+									</div>
+								</div>								
+							</div>
+							
+                            <div class="row">
+								<div class="col-md-12">
+									<div class="form-group">						
+										<label>Image</label>
+										<input type="file" name="image" [(ngModel)]="sliders.image" #image="ngModel" />
+									</div>
+								</div>								
+							</div>							
+						</div>
+						<!-- <div>
+						    <a href="javascript:void(0)" (click)="addBlock()">Add More</a>
+						</div> -->
+						<div class="text-center">
+						    <button type="button" (click)="addSlider(slideraddForm)" class="btn btn-info btn-fill btn-wd">Submit</button>
+						</div>
+                    </form>					
+				</div>
+			</div>
+		</div>
+	</div>
+</div>

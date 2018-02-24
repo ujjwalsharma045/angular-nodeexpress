@@ -41,7 +41,7 @@ export class PagesComponent implements OnInit {
     private deletedpageid;
     private sectionTitle = 'Pages';
     private pageUrl = '';
-    
+    private isLogin;
 	@ViewChild('myModal')
 	modal: BsModalComponent;
 	
@@ -50,6 +50,7 @@ export class PagesComponent implements OnInit {
 			'searchcontent':[null, Validators.required]      			
        });
 	   this.pageUrl = _global.baseApiUrl;
+	   this.isLogin = true;
 	}
 
     ngOnInit() {		

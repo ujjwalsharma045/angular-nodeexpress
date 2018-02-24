@@ -13,10 +13,10 @@ declare var $:any;
 export class DashboardComponent implements OnInit{
 	
 	siteUrl = 'http://localhost:8081/';
-	private totaluser;
-	private totalpage;
-	private totalcategory;
-	private totalproduct;
+	totaluser:any = 0;
+	totalpage:any = 0;
+	totalcategory:any = 0;
+	totalproduct:any = 0;
 	constructor(private http: HttpClient) { 
 	
 	}

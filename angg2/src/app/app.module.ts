@@ -18,6 +18,7 @@ import { UsersModule } from './users/users.module';
 import { PagesModule } from './pages/pages.module';
 import { CategoriesModule } from './categories/categories.module';
 import { ProductsModule } from './products/products.module';
+import { SlidersModule } from './sliders/sliders.module';
 
 import { DashboardComponent }   from './dashboard/dashboard.component';
 import { UserComponent }   from './user/user.component';
@@ -43,6 +44,18 @@ import { PageService } from './services/page.service';
 //import {PopupModule} from 'ng2-opd-popup';
 //import {DatePickerModule} from 'ng2-datepicker-bootstrap';
 //import {ModalModule} from "ng2-modal";
+import { AuthguardService } from './__guards/authguard.service';
+import { GuestuserService } from './__guards/guestuser.service';
+import { ShowhideDirective } from './showhide.directive';
+import { EmailvalidatorDirective } from './emailvalidator.directive';
+import { InvalidcharacterDirective } from './invalidcharacter.directive';
+import { OrdercheckDirective } from './ordercheck.directive';
+//import { RangeDirective } from './range.directive';
+
+//import { DatetimedifferPipe } from './datetimediffer.pipe';
+//import { SafeHtmlPipe } from './safe-html.pipe';
+//import { RedhighlightPipe } from './redhighlight.pipe';
+//import { NumberconvertPipe } from './numberconvert.pipe';
 
 @NgModule({
   imports: [
@@ -51,6 +64,7 @@ import { PageService } from './services/page.service';
 	PagesModule,
 	CategoriesModule,
 	ProductsModule,
+	SlidersModule,
 	//BrowserAnimationsModule,
 	HttpModule,
     RouterModule.forRoot(AppRoutes),
@@ -86,13 +100,24 @@ import { PageService } from './services/page.service';
     RegisterComponent,	        
 	FocusingDirective,	
 	LinkhoveringDirective,
-	BoldDirective,	
+	BoldDirective,
+	ShowhideDirective,
+	EmailvalidatorDirective,
+	InvalidcharacterDirective,
+	OrdercheckDirective,
+	//RangeDirective,
+	//CostPriceComparisionPipe,
+	//DatetimedifferPipe,
+	//SafeHtmlPipe,
+	//RedhighlightPipe,
+	//NumberconvertPipe,	
 	//ServiceComponent,
 	//ServiceeditComponent,	
   ],  
-  providers: [AppGlobals , PageService],
+  providers: [AppGlobals , PageService, AuthguardService, GuestuserService],
   bootstrap: [AppComponent],
-  exports:[    
+  exports:[ 
+      
   ]
 })
 export class AppModule { }

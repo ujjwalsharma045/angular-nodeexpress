@@ -9,6 +9,7 @@ import {HttpClient} from '@angular/common/http';
   templateUrl: './adminlogin.component.html',
   styleUrls: ['./adminlogin.component.css']
 })
+
 export class AdminloginComponent implements OnInit {
 
     private submitted =false;
@@ -18,7 +19,7 @@ export class AdminloginComponent implements OnInit {
 	private userUrl = "http://localhost:8081/";
 	private successmessage;
 	private errormessage;
-	
+	private isLogin;
     constructor(private route: ActivatedRoute, private router: Router, private http: HttpClient, private formBuilder: FormBuilder) { 
         this.loginForm = formBuilder.group({      
 			'username':[null, Validators.required],      
@@ -27,7 +28,8 @@ export class AdminloginComponent implements OnInit {
 
         this.forgotpasswordForm = formBuilder.group({      
 			'email':[null, Validators.required],      			
-        });		
+        });
+        this.isLogin = true;   		
     }
 
     ngOnInit() {
@@ -37,11 +39,12 @@ export class AdminloginComponent implements OnInit {
 	login(){
 		this.submitted = true;
 		if(this.loginForm.valid){
-			console.log(this.loginForm.value);
+			console.log(this.loginForm.value);			
+			localStorage.setItem('is_loggedin' , '1');
 	        this.http.post(this.userUrl+"login", this.loginForm.value).subscribe(result => {
 				console.log(result);
 				if(result['success']==1){
-				   alert("cfgh");
+				   //alert("cfgh");
 				   //localStorage.setItem('is_logged_in' , '1');
 				   this.router.navigate(['./users']);	  
 				}

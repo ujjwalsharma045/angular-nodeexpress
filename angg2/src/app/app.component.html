@@ -1,4 +1,4 @@
-<div class="wrapper" *ngIf="!isLogin">
+<div class="wrapper" *ngIf="isLogin">
     <div class="sidebar" data-background-color="white" data-active-color="danger">
         <!-- <sidebar-cmp></sidebar-cmp> -->
 		<router-outlet name="sidebar"></router-outlet>
@@ -14,7 +14,7 @@
     </div>
 </div>
 
-<div class="wrapper" *ngIf="isLogin">
+<div class="wrapper" *ngIf="!isLogin">
     <div class="main-panel" style="width:100%">
         <!-- <navbar-cmp></navbar-cmp> -->
 		<router-outlet name="header"></router-outlet>

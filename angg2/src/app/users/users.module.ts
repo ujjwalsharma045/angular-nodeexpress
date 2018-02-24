@@ -5,6 +5,8 @@ import { UseraddComponent } from '../useradd/useradd.component';
 import { UsereditComponent } from '../useredit/useredit.component';
 import { UserviewComponent } from '../userview/userview.component'; 
 import { SharedModule } from '../shared/shared.module';
+import { DatetimedifferPipe } from '../datetimediffer.pipe';
+//import { SafeHtmlPipe } from '../safe-html.pipe';
 
 @NgModule({
   imports: [
@@ -15,7 +17,9 @@ import { SharedModule } from '../shared/shared.module';
     UsersComponent,
 	UseraddComponent,
 	UsereditComponent,
-	UserviewComponent	
+	UserviewComponent,
+    DatetimedifferPipe,
+    //SafeHtmlPipe	
   ],
   providers:[
   
@@ -24,7 +28,9 @@ import { SharedModule } from '../shared/shared.module';
     UsersComponent,
 	UseraddComponent,
 	UsereditComponent,
-	UserviewComponent    
+	UserviewComponent,
+    DatetimedifferPipe,
+    //SafeHtmlPipe    
   ]
 })
 export class UsersModule { }

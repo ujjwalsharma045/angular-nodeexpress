@@ -10,6 +10,7 @@ import {HttpClient} from '@angular/common/http';
 import { PagerService } from '../services/pager.service';
 import { BsModalComponent } from 'ng2-bs3-modal';
 import 'rxjs/Rx';
+
 @Component({
     selector: 'users-cmp', 
     moduleId: module.id,

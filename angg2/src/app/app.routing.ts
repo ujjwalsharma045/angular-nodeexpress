@@ -36,12 +36,18 @@ import { CategoryeditComponent } from './categoryedit/categoryedit.component';
 import { CategoryviewComponent } from './categoryview/categoryview.component';
 //import { ServiceComponent } from './service/service.component';
 //import { ServiceeditComponent } from './serviceedit/serviceedit.component';
-
+import { AuthguardService } from './__guards/authguard.service';
+import { GuestuserService } from './__guards/guestuser.service';
+import { SliderComponent } from './slider/slider.component';
+import { SlideraddComponent } from './slideradd/slideradd.component';
+import { SliderviewComponent } from './sliderview/sliderview.component';
+import { SlidereditComponent } from './slideredit/slideredit.component';
 export const AppRoutes: Routes = [
     {
         path: '',
         redirectTo: 'dashboard',
         pathMatch: 'full',
+        canActivate:[AuthguardService]		
     },
     {
         path: 'dashboard',
@@ -52,6 +58,7 @@ export const AppRoutes: Routes = [
            { path: '', component:NavbarComponent, outlet:'navbar'},
            { path: '', component:FooterComponent, outlet:'footer'}
 		],
+		canActivate:[AuthguardService]
     },
     /*{
         path: 'user',
@@ -64,17 +71,20 @@ export const AppRoutes: Routes = [
 	{
         path: 'user/add',
         component:UseraddComponent, 
-		data:{title:'Add User'}
+		data:{title:'Add User'},
+		canActivate:[AuthguardService]
     },
 	{
         path: 'user/edit/:id',
 		component:UsereditComponent, 
-		data:{title:'Edit User'}        	
+		data:{title:'Edit User'},
+        canActivate:[AuthguardService]		
     },
 	{
         path: 'user/view/:id',
 		component:UserviewComponent, 
-		data:{title:'View User'}        	        	
+		data:{title:'View User'},
+        canActivate:[AuthguardService]		
     },
     {
         path: 'table',
@@ -109,6 +119,7 @@ export const AppRoutes: Routes = [
            { path: '', component:NavbarComponent, outlet:'navbar'},
            { path: '', component:FooterComponent, outlet:'footer'}
 		],
+		canActivate:[AuthguardService]
     },
 	{
         path: 'pages',
@@ -119,6 +130,7 @@ export const AppRoutes: Routes = [
            { path: '', component:NavbarComponent, outlet:'navbar'},
            { path: '', component:FooterComponent, outlet:'footer'}
 		],
+		canActivate:[AuthguardService]
     },
 	/* {
         path: 'page',
@@ -131,22 +143,26 @@ export const AppRoutes: Routes = [
     {
         path: 'page/add',
 		component:PageaddComponent,
-		data:{title:'Add Page'}		
+		data:{title:'Add Page'},
+        canActivate:[AuthguardService]		
     },
     {
         path: 'page/edit/:id',
 		component:PageeditComponent,
-		data:{title:'Edit Page'}		
+		data:{title:'Edit Page'},
+        canActivate:[AuthguardService] 		
     },
     {
         path: 'page/view/:id',
 		component:PageviewComponent,
-		data:{title:'View Page'}		
+		data:{title:'View Page'},
+        canActivate:[AuthguardService]		
     },	
 	{
         path: 'settings',
         component: SettingsComponent,
-		data:{title:'Settings'}
+		data:{title:'Settings'},
+		canActivate:[AuthguardService]		
     },
 	{
         path: 'login',
@@ -156,30 +172,35 @@ export const AppRoutes: Routes = [
 		   { path: '', component:HeaderComponent, outlet:'header'},            
            { path: '', component:FooterComponent, outlet:'footer'}
 		],
+		canActivate:[GuestuserService]
     },
 	{
         path: 'register',
         component: RegisterComponent,
 		data:{title:'Sign-Up'},
 		children:[
-		   { path: '', component:HeaderComponent, outlet:'header'},            
-           { path: '', component:FooterComponent, outlet:'footer'}
+		   { path: '', component:HeaderComponent, outlet:'header_guest'},            
+           { path: '', component:FooterComponent, outlet:'footer_guest'}
 		],
+		canActivate:[GuestuserService]
     },	
 	{
         path: 'product/add',
 		component:ProductaddComponent,
-		data:{title:'Add Product'}		
+		data:{title:'Add Product'},
+        canActivate:[AuthguardService] 		
     },
     {
         path: 'product/edit/:id',
 		component:ProducteditComponent,
-		data:{title:'Edit Product'}		
+		data:{title:'Edit Product'},
+        canActivate:[AuthguardService]		
     },
     {
         path: 'product/view/:id',
 		component:ProductviewComponent,
-		data:{title:'View Product'}		
+		data:{title:'View Product'},
+        canActivate:[AuthguardService]		
     },
 	{
         path: 'products',
@@ -190,21 +211,25 @@ export const AppRoutes: Routes = [
            { path: '', component:NavbarComponent, outlet:'navbar'},
            { path: '', component:FooterComponent, outlet:'footer'}
 		],
+		canActivate:[AuthguardService]
     },
 	{
         path: 'category/add',
 		component:CategoryaddComponent,
-		data:{title:'Add Category'}		
+		data:{title:'Add Category'},
+        canActivate:[AuthguardService]		
     },
     {
         path: 'category/edit/:id',
 		component:CategoryeditComponent,
-		data:{title:'Edit Category'}		
+		data:{title:'Edit Category'},
+        canActivate:[AuthguardService]		
     },
     {
         path: 'category/view/:id',
 		component:CategoryviewComponent,
-		data:{title:'View Category'}		
+		data:{title:'View Category'},
+        canActivate:[AuthguardService]		
     },
 	{
         path: 'category',
@@ -215,6 +240,31 @@ export const AppRoutes: Routes = [
            { path: '', component:NavbarComponent, outlet:'navbar'},
            { path: '', component:FooterComponent, outlet:'footer'}
 		],
+		canActivate:[AuthguardService] 
+    },
+	{
+        path: 'slider',
+		component:SlideraddComponent,
+		data:{title:'Add Slider'},
+        canActivate:[AuthguardService]		
+    },
+	{
+        path: 'slider/add',
+		component:SliderComponent,
+		data:{title:'Slider'},
+        canActivate:[AuthguardService]		
+    },
+	{
+        path: 'slider/view/:id',
+		component:SliderviewComponent,
+		data:{title:'View Slider'},
+        canActivate:[AuthguardService]		
+    },
+	{
+        path: 'slider/edit/:id',
+		component:SlidereditComponent,
+		data:{title:'Edit Slider'},
+        canActivate:[AuthguardService]		
     },
 	/* {
         path: 'service/add',
