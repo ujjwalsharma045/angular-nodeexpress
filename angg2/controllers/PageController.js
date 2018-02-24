@@ -83,10 +83,10 @@ module.exports = function(app , func , mail, upload, storage, mailer, multer, va
 	app.get("/page/view/:id",  function(req, res){
 		var pageid = req.params.id;
 		Page.find({_id:pageid}, function(err, records) {
-			  if (err) throw err;
-			  console.log(records); 
-			  res.setHeader('Content-Type', 'application/json');
-			  res.send(JSON.stringify({'records':records, 'success':1, 'authen':1}));
+			if (err) throw err;
+			console.log(records); 
+			res.setHeader('Content-Type', 'application/json');
+			res.send(JSON.stringify({'records':records, 'success':1, 'authen':1}));
 		}); 		
 	});
 
@@ -110,29 +110,29 @@ module.exports = function(app , func , mail, upload, storage, mailer, multer, va
 				}
 				else {					
 					if(error.length <=0){
-						   var currentdate = new Date();
-						   var formatteddate = dateFormat(currentdate ,'yyyy-mm-dd HH:MM:ss');
-				  
-						   data = {
-								title: req.body.title,
-								slug:slugify(req.body.title),
-								content:req.body.content,								
-								modified_at:formatteddate,
-								status:req.body.status
-						   }; 
-				  
-						   console.log(data);
-						   Page.findOneAndUpdate({_id: pageid}, data, function(err, records) {
-							  if (err) throw err;				 
-										 
-							  res.setHeader('Content-Type', 'application/json');
-							  res.send(JSON.stringify({authen:1 ,success:1 , message:'Page updated successfully'}));
-						   });						  									      	 		 
-					 }
-					 else {
+						var currentdate = new Date();
+						var formatteddate = dateFormat(currentdate ,'yyyy-mm-dd HH:MM:ss');
+			  
+						data = {
+							title: req.body.title,
+							slug:slugify(req.body.title),
+							content:req.body.content,								
+							modified_at:formatteddate,
+							status:req.body.status
+						}; 
+			  
+						console.log(data);
+						Page.findOneAndUpdate({_id: pageid}, data, function(err, records) {
+						  if (err) throw err;				 
+									 
 						  res.setHeader('Content-Type', 'application/json');
-						  res.send(JSON.stringify({authen:1 ,success:0}));
-					 }										
+						  res.send(JSON.stringify({authen:1 ,success:1 , message:'Page updated successfully'}));
+						});
+					}
+					else {
+						res.setHeader('Content-Type', 'application/json');
+						res.send(JSON.stringify({authen:1 ,success:0}));
+					}										
 				}
 			});												    		
 	});

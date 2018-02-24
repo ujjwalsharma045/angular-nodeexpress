@@ -1,208 +1,94 @@
-module.exports = function(app , func , mail, upload, storage, mailer, multer, validator, Services, paginate, cors){
+module.exports = function(app , func , mail, upload, storage, mailer, multer, validator, Sliders, paginate, cors){
 	
-	app.get("/services/" , servicelist);
-	app.get("/services/view/:id" , serviceview);
-	app.get("/services/add" , serviceadd);
-	app.post("/services/add" , serviceadd);
-	app.get("/services/edit/:id" , serviceedit);
-	app.post("/services/edit/:id" , serviceedit);
-	app.get("/services/delete/:id" , servicedelete);
+	app.get("/slider" , sliderlist);
+	app.get("/slider/view/:id" , sliderview);
+	app.post("/slider/add" , slideradd);
+	app.post("/slider/edit/:id" , slideredit);	
+	app.get("/slider/delete/:id" , sliderdelete);
 	
-	function servicelist(req, res){
+    function sliderview(req, res){
 		var sess = req.session;
-        //req.session.flashmessage = "";		
-        func.isGuestSession(req.session , res); 
-		var data = {
-			
-		};
-				
-		if(req.query.title && validator.trim(req.query.title.trim())){			
-		    var searchtitle = req.query.title.trim();
-		   	data.title = searchtitle;
-		}
-		
-		if(req.query.price && validator.trim(req.query.price.trim())){			
-		    var searchprice = req.query.price.trim();
-		   	data.price = searchprice;
-		}
-		
-		if(req.query.cost && validator.trim(req.query.cost.trim())){			
-		    var searchcost = req.query.cost.trim();
-		   	data.cost = searchcost;
-		}
-		
-		if(req.query.limit){
-		  perPage = req.query.limit;	
-		}
-		else {
-		  perPage = 1;	
-		}
-        
-        page =  req.query.page > 0 ? req.query.page:1;
-		
-        Services.find(data).limit(perPage).skip(perPage * (page-1)).sort({'title': 'asc'}).exec(function(err, services){
-			  console.log(services);			   
-			  Services.count().exec(function (err, count) {	
-                    console.log(count);			  
-					res.render("services/index" , {
-				        services:services,
-				        session:sess,
-						pages: count/perPage,
-						count: count,
-						pagelimit:perPage,
-						currentpage:page
-			        });	 
-			  });
-		});		
-	}
-
-    function serviceview(req, res){
-		var sess = req.session;
-		var serviceid = req.params.id;
+		var sliderid = req.params.id;
 		
 		func.isGuestSession(req.session , res);
-		Services.find({_id:serviceid}, function(err, services) {
-			  if (err) throw err;
-			  console.log(services); 
-              res.render("services/view" , {
-				service:services,
-				session:sess
-			  });			  			 			  
+		Sliders.find({_id:sliderid}, function(err, records) {
+			if(err){
+				var response = {error:err};  
+			}
+			else {
+				var response = {'records':records, 'success':1, 'authen':1};  
+			}
+			
+			res.setHeader('Content-Type' , 'application/json');
+			res.send(JSON.stringify(response));
         }); 
 	}
-	
-	function servicedelete(req, res){
-		var sess = req.session;
-		var serviceid = req.params.id;
-				
-        func.isGuestSession(req.session , res);				
-		Services.findOneAndRemove({ _id: serviceid }, function(err) {
-            if (err) throw err;            
-            console.log('Service successfully deleted!');
-			sess.flashmessage = "Service detail deleted successfully";
-			res.redirect("../");
-        });
-	}
-	
-	function serviceadd(req, res){
-		var sess = req.session;		
-		var error = [];
-		var data = {};
-		
-		func.isGuestSession(req.session , res);
-		if(req.method=="POST"){					   
-		   
-		   if(!validator.trim(req.body.title)){
-			   error.push("Enter Title");
-		   }
-		   
-           if(!validator.trim(req.body.description)){
-			   error.push("Enter Description");
-		   }
-		   
-           if(!validator.trim(req.body.price)){
-			   error.push("Enter Price");
-		   }
-		   
-           if(!validator.trim(req.body.cost)){
-			   error.push("Enter Cost");
-		   }
-		   
-		   if(!validator.trim(req.body.status)){
-			   error.push("Select Status");
-		   }
 
-           if(error.length<=0){		      
-                data = {
-					title:req.body.title.trim(),
-					description:req.body.description.trim(),
-					usertype:req.body.price.trim(),
-					usertype:req.body.price.trim(),
-					status:req.body.status.trim()			  
-		        };
+    function sliderdelete(req , res){
+		var sliderid = req.params.id;
+		Sliders.findOneAndRemove({_id:sliderid} , function(err){
+		        if(err){
+					var response = {error:err};
+			    }
+				else {
+					var response = {'success':1, 'authen':1};
+				}
+			 
+			    res.setHeader('Content-Type' , 'application/json');
+			    res.send(JSON.stringify(response));
+		});
+	}     
+
+    function slideradd(req, res){
+		var condition = {
+			title: req.body.title
+		};
+		
+		Sliders.find(condition).exec(function(err , records){
+			if(records.length>0){
+				res.setHeader('Content-Type', 'application/json');
+                res.send(JSON.stringify({authen:1 , error:1 , message:'Page name already exists.'}));				
+			}
+			else {
+				data = {
+					title:req.body.title,
+					content:req.body.description,
+					order:req.body.order,							 
+				    status:req.body.status					 
+				};
 				
-				var detail = new Services(data);
-				
-				detail.save(function(err){
-				      if(err) throw err;
-				      console.log('Service saved successfully!');
-					  sess.flashmessage = "Service detail saved successfully";
-					  res.redirect('../services');
-			    });			  
-		   }
-		   else {
-			   res.render("services/add" , {
-				   service:req.body,	
-				   errors:error   	
-			   });
-		   } 
-		}
-        else {
-			res.render("services/add" , {
-			   service:req.body,	
-			   errors:error   	
-			});
-		}
+				var sliders = new Sliders(data);
+				sliders.save(function(err){
+				    res.setHeader('Content-Type', 'application/json');
+					res.send(JSON.stringify({authen:1 , error:1 , message:'Page name already exists.'}));
+				});
+			}
+		});
 	}
 
-    function serviceedit(req, res){
-		var sess = req.session;
-		var serviceid = req.params.id;
-		var error = [];
-		var data = [];
-		var servicedata = [];
+    function slideredit(req, res){
+	    var sliderid = req.params.id; 
+		var condition = {
+			title:req.body.title
+		};
 		
-		func.isGuestSession(req.session , res);
-		if(req.method=="POST"){		   			   
-		   			   
-		   if(!validator.trim(req.body.title)){
-			   error.push("Enter Title");
-		   }
-		   
-           if(!validator.trim(req.body.description)){
-			   error.push("Enter Description");
-		   }
-		   
-           if(!validator.trim(req.body.price)){
-			   error.push("Enter Price");
-		   }
-		   
-           if(!validator.trim(req.body.cost)){
-			   error.push("Enter Cost");
-		   }
-		   
-		   if(!validator.trim(req.body.status)){
-			   error.push("Select Status");
-		   }
-
-           if(error.length<=0){
-		      
-			    var data = {
-				   title:req.body.title.trim(),
-				   description:req.body.description.trim(),
-				   price:req.body.price.trim(),
-				   cost:req.body.cost.trim(),
-				   status:req.body.status.trim()			  
-		        };
-					 
-                Services.findOneAndUpdate({ _id: serviceid }, data, function(err, services) {
-				    if(err) 
-					  throw err;				 
-				    console.log(services);
-				    sess.flashmessage = "Service detail updated successfully";
-				    res.redirect("../");
-                });               			 
-		    }
-		 }
-        		
-         Services.find({_id:serviceid}, function(err, services) {
-			  if (err) throw err;
-			  console.log(services);               
-              res.render("services/edit" , {
-				 service:services,
-				 id:serviceid,		   
-				 errors:error   	
-			  });			  
-        }); 		       	
-	}    
+		Sliders.find(condition).exec(function(err , records){
+			if(records.length>0){
+				res.setHeader('Content-Type', 'application/json');
+                res.send(JSON.stringify({authen:1 , error:1 , message:'Page name already exists.'}));				
+			}
+			else {
+				data = {
+					title:req.body.title,
+					content:req.body.description,
+					order:req.body.order,							 
+				    status:req.body.status					 
+				}; 
+ 
+				Sliders.findOneAndUpdate({_id:sliderid} , data , function(err , records){
+				
+				}); 
+			}
+		});
+	}		
 }
